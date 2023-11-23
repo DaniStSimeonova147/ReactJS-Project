@@ -7,5 +7,6 @@ Topic: Adopt me.
 Web application for sharing animals for adoption.
 
 
-![image](https://github.com/DaniStSimeonova147/ReactJS-Project/assets/48598905/97233067-4e47-4281-8095-8159b1cbae5c)
+![image](https://github.com/DaniStSimeonova147/ReactJS-Project/assets/48598905/c688c76f-2230-45dc-8da4-9d199035cc0e)
+
 
