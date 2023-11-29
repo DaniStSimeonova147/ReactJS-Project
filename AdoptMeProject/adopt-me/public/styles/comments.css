@@ -1,0 +1,97 @@
+.create-comment>.form>textarea {
+    resize: none;
+    width: 100px;
+    height: 100px;
+    margin-top: 22px;
+    margin-bottom: 28px;
+    padding: 5px;
+    
+}
+
+.details-comments {
+    display: table-cell;
+   
+}
+
+.create-comment {
+    margin: 60px;
+    position: relative;
+    text-align: center;
+    width: 900px;
+    height: auto;
+    border-radius: 20px;
+    padding: 10px;
+    box-sizing: border-box;
+    background: rgba(48, 219, 241, 0.377);
+    
+}
+
+.create-comment>label {
+    color: black;
+    font-size: 28px;
+    text-align: center;
+    font-weight: 300px;
+    line-height: normal;
+    
+}
+
+.form{
+    display: flex;
+}
+
+.create-comment .form input {
+    background-color: white;
+	color: black;
+	width: 200px;
+	border-radius: 3px;
+	height: 30px;
+    margin: 40px;
+}
+    
+
+.create-comment .form .btn-submit {
+    background-color: black;
+	color: white;
+	font-weight: bold;
+	border: none;
+	width: 200px;
+	border-radius: 3px;
+	height: 30px;
+}
+    
+
+
+.create-comment .form textarea {
+    color: black;
+    width: 400px;
+    font-size: 22px;
+    text-align: left;
+    line-height: normal;
+    
+}
+
+.info-section>.details-comments li {
+    width: 400px;
+    display: inline-block;
+    position: static;
+    margin: 20px auto 25px auto;
+    box-shadow: 8px 8px 8px 0 rgba(0, 0, 0, 0.2), 12px 12px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 16px;
+    margin-left: 60px;
+    background: #6f5d9c;
+    color: white;
+    
+}
+
+.comment p {
+    padding: 16px;
+    
+}
+
+
+.create-comment>.button:hover {
+    background-color: #41425c;
+    color: white;
+    cursor: pointer;
+    
+}
