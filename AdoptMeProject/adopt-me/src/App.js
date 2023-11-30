@@ -14,7 +14,7 @@ import { CreatePet } from './components/CreatePet/CreatePet';
 import { EditPet } from './components/EditPet/EditPet';
 import { PetDetails } from './components/PetDetails/PetDetails';
 import { Footer } from "./components/Footer/Footer";
-import { withAuth } from './hoc/withAuth';
+//import { withAuth } from './hoc/withAuth';
 
 function App() {
     const navigate = useNavigate();
@@ -45,7 +45,7 @@ function App() {
     };
 
 
-    const EnhancedLogin = withAuth(Login);
+    //const EnhancedLogin = withAuth(Login);
     
 
     return (
@@ -57,7 +57,7 @@ function App() {
                 <main id="main-content">
                     <Routes>
                         <Route path='/' element={<Home />} />
-                        <Route path='/login' element={<EnhancedLogin />} />
+                        <Route path='/login' element={<Login />} />
                         <Route path='/logout' element={<Logout />} />
                         <Route path='/register' element={<Register />} />
                         <Route path='/create-pet' element={<CreatePet onCreatePetSubmit={onCreatePetSubmit} />} />
