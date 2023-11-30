@@ -8,8 +8,11 @@ const LoginFormKeys = {
   Password: 'password'
 };
 
-export const Login = () => {
-  const { onLoginSubmit } = useAuthContext();
+export const Login = ({
+  auth,
+}) => {
+  const {onLoginSubmit} = auth;
+  //const { onLoginSubmit } = useAuthContext();
   const { values, changeHandler, onSubmit } = useForm({
     [LoginFormKeys.Email]: '',
     [LoginFormKeys.Password]: '',
