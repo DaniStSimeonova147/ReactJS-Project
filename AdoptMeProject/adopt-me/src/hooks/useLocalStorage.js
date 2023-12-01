@@ -1,12 +1,13 @@
 import { useState } from "react";
 
 export const useLocalStorage = (key, initialValue) => {
+    // const key = useId();
     const [state, setState] = useState(() => {
-        const persitedStateSerialized = localStorage.getItem(key);
-        if (persitedStateSerialized) {
-            const persistedState = JSON.parse(persitedStateSerialized);
+        const persistedStateSerialized = localStorage.getItem(key);
+        if (persistedStateSerialized) {
+            const persistedState = JSON.parse(persistedStateSerialized);
 
-            return persistedState;
+           return persistedState;
         }
 
         return initialValue;
@@ -20,6 +21,6 @@ export const useLocalStorage = (key, initialValue) => {
 
     return [
         state,
-        setLocalStorageState
+        setLocalStorageState,
     ];
 };

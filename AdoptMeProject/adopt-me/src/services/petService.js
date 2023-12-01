@@ -15,19 +15,12 @@ export const petServiceFactory = (token) => {
     const getOne = async (petId) => {
         const result = await request.get(`${baseUrl}/${petId}`);
         console.log(result);
-        console.log(result._ownerId);
 
         return result;
     };
 
     const create = async (petData) => {
         const result = await request.post(baseUrl, petData);
-
-        return result;
-    };
-
-    const addComment = async (petId, data) => {
-        const result = await request.post(`${baseUrl}/${petId}/comments`, data);
 
         return result;
     };
@@ -40,7 +33,6 @@ export const petServiceFactory = (token) => {
         getAll,
         getOne,
         create,
-        addComment,
         delete: deletePet,
         edit,
     };

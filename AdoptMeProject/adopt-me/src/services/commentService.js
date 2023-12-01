@@ -1,20 +1,20 @@
-import * as request from './requester';
+import { requestFactory } from './requester';
 
-const baseUrl = 'http://localhost:3030/jsonstore/comments';
+const baseUrl = 'http://localhost:3030/data/comments';
+const request = requestFactory();
 
 export const getAll = async (petId) => {
-    const query = new URLSearchParams({
-        where: `gameId="${petId}"`,
-        load: `owner=_ownerId:users`,
-    });
+    const searchQuery = encodeURIComponent(`petId="${petId}"`);
+    const relationQuery = encodeURIComponent(`author=_ownerId:users`);
 
-    const result = await request.get(`${baseUrl}?${query}`);
 
-    return result;
+    const result = await request.get(`${baseUrl}?where=${searchQuery}`);
+    const comments = Object.values(result);
+    return comments;
 };
 
-export const create = async (data) => {
-    const result = await request.post(baseUrl, data);
+export const create = async (petId, comment) => {
+    const result = await request.post(baseUrl, { petId, comment });
 
     return result;
 };

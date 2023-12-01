@@ -103,7 +103,6 @@ export const PetDetails = () => {
                     </div>
                 </div>
 
-                {/* <!-- Comments ( htmlFor Guests and Users ) --> */}
                 <div className="details-comments">
                     <h2>Comments:</h2>
                     <ul>
