@@ -34,6 +34,10 @@ export const PetProvider = ({
         navigate(`/catalog/${values._id}`);
     };
 
+    const deletePet = (petId) => {
+        setPets(state => state.filter(pet => pet._id !== petId));
+    };
+
     const getPet = (petId) => {
         return pets.find(pet => pet._id === petId);
     };
@@ -42,6 +46,7 @@ export const PetProvider = ({
         pets,
         onCreatePetSubmit,
         onPetEditSubmit,
+        deletePet,
         getPet,
     };
 

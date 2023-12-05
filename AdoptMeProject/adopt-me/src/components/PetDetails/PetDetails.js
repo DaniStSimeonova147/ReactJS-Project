@@ -5,12 +5,15 @@ import { petServiceFactory } from '../../services/petService';
 import { useService } from "../../hooks/useService";
 import * as commentService from '../../services/commentService';
 import { AuthContext } from "../../contexts/AuthContext";
+
 import { AddComment } from "./AddComment/AddComment";
 import { petReducer } from "../../reducers/petReducer";
+import { usePetContext } from "../../contexts/PetContext";
 
 export const PetDetails = () => {
     const { petId } = useParams();
     const { userId, isAuthenticated, userEmail } = useContext(AuthContext);
+    const {deletePet} = usePetContext();
     const [pet, dispatch] = useReducer(petReducer, {});
     const petService = useService(petServiceFactory);
     const navigate = useNavigate();
@@ -42,10 +45,17 @@ export const PetDetails = () => {
 
     const isOwner = pet._ownerId === userId;
 
-    const onDeteteClick = async () => {
-        await petService.delete(pet._id);
+    const onDeleteClick = async () => {
+        // eslint-disable-next-line no-restricted-globals
+        const result = confirm(`Are you sure you want to delete ${pet.name}?`);
 
-        navigate('/catalog');
+        if (result) {
+            await petService.delete(pet._id);
+
+            deletePet(pet._id);
+
+            navigate('/catalog');
+        }
     };
 
 
@@ -78,7 +88,7 @@ export const PetDetails = () => {
                                             )}
                                             {/*Delete Pet  */}
                                             {isOwner && (
-                                                <button className="button" onClick={onDeteteClick}>
+                                                <button className="button" onClick={onDeleteClick}>
                                                     <img
                                                         className="bin-img"
                                                         src="/images/deleteLogo.png"
