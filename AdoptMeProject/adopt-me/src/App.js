@@ -22,7 +22,6 @@ function App() {
         <AuthProvider>
             <PetProvider>
                 <div id="box">
-
                     <Header />
                     {/* <!-- Main Content --> */}
                     <main id="main-content">
