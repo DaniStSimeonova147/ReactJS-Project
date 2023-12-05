@@ -34,10 +34,15 @@ export const PetProvider = ({
         navigate(`/catalog/${values._id}`);
     };
 
+    const getPet = (petId) => {
+        return pets.find(pet => pet._id === petId);
+    };
+
     const contextValues = {
         pets,
         onCreatePetSubmit,
         onPetEditSubmit,
+        getPet,
     };
 
     return (
