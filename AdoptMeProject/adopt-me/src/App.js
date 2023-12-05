@@ -1,10 +1,7 @@
-import { useState, useEffect } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 
-import { petServiceFactory } from './services/petService';
-import { authServiceFactory } from './services/authService';
 import { AuthProvider } from './contexts/AuthContext';
-import { useService } from './hooks/useService';
+import { PetProvider } from './contexts/PetContext';
 
 import { CreatePet } from './components/CreatePet/CreatePet';
 import { Footer } from "./components/Footer/Footer";
@@ -20,60 +17,36 @@ import { RouteGuard } from './components/common/RouteGuard';
 import { PetOwner } from './components/common/PetOwner';
 
 function App() {
-    const navigate = useNavigate();
-    const [pets, setPets] = useState([]);
-    const petService = petServiceFactory();//auth.accessToken
-
-    useEffect(() => {
-        petService.getAll()
-            .then(result => {
-                setPets(result)
-            })
-    }, []);
-
-    const onCreatePetSubmit = async (data) => {
-        const newPet = await petService.create(data);
-        setPets(state => [...state, newPet]);
-        navigate('/catalog');
-    }
-
-    const onPetEditSubmit = async (values) => {
-        const result = await petService.edit(values._id, values);
-
-        setPets(state => state.map(x => x._id === values._id ? result : x));
-
-        navigate(`/catalog/${values._id}`);
-    };
-
-
 
     return (
         <AuthProvider>
-            <div id="box">
+            <PetProvider>
+                <div id="box">
 
-                <Header />
-                {/* <!-- Main Content --> */}
-                <main id="main-content">
-                    <Routes>
-                        <Route path='/' element={<Home />} />
-                        <Route path='/login' element={<Login />} />
-                        <Route path='/register' element={<Register />} />
-                        <Route path='/catalog' element={<Catalog pets={pets} />} />
-                        <Route path='/catalog/:petId' element={<PetDetails />} />
+                    <Header />
+                    {/* <!-- Main Content --> */}
+                    <main id="main-content">
+                        <Routes>
+                            <Route path='/' element={<Home />} />
+                            <Route path='/login' element={<Login />} />
+                            <Route path='/register' element={<Register />} />
+                            <Route path='/catalog' element={<Catalog />} />
+                            <Route path='/catalog/:petId' element={<PetDetails />} />
 
-                        <Route element={<RouteGuard />}>
-                            <Route path='/catalog/:petId/edit' element={
-                                <PetOwner>
-                                    <EditPet />
-                                </PetOwner>} />
-                            <Route path='/create-pet' element={<CreatePet onCreatePetSubmit={onCreatePetSubmit} />} />
-                            <Route path='/logout' element={<Logout />} />
-                        </Route>
+                            <Route element={<RouteGuard />}>
+                                <Route path='/catalog/:petId/edit' element={
+                                    <PetOwner>
+                                        <EditPet />
+                                    </PetOwner>} />
+                                <Route path='/create-pet' element={<CreatePet />} />
+                                <Route path='/logout' element={<Logout />} />
+                            </Route>
 
-                    </Routes>
-                </main>
-                <Footer />
-            </div>
+                        </Routes>
+                    </main>
+                    <Footer />
+                </div>
+            </PetProvider>
         </AuthProvider>
     );
 }

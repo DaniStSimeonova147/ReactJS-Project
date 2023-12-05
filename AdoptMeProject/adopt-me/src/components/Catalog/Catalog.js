@@ -1,8 +1,9 @@
+import { usePetContext } from "../../contexts/PetContext";
 import { CatalogItem } from "./CatalogItem";
 
-export const Catalog = ({
-    pets
-}) => {
+export const Catalog = () => {
+    const {pets} = usePetContext();
+
     return (
         //{/* <!-- Catalogue --> */}
         <section id="catalog-page" >

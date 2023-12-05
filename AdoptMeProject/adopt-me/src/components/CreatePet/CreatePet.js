@@ -1,10 +1,11 @@
 import { useState } from "react";
 
 import { useForm } from "../../hooks/useForm";
+import { usePetContext } from "../../contexts/PetContext";
 
-export const CreatePet = ({
-  onCreatePetSubmit,
-}) => {
+export const CreatePet = () => {
+  const {onCreatePetSubmit} = usePetContext();
+
   const {values, changeHandler, onSubmit } = useForm({
     name: '',
     type: '',
