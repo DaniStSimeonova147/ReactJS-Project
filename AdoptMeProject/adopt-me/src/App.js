@@ -3,7 +3,7 @@ import { Routes, Route, useNavigate } from 'react-router-dom';
 
 import { petServiceFactory } from './services/petService';
 import { authServiceFactory } from './services/authService';
-import {  AuthProvider } from './contexts/AuthContext';
+import { AuthProvider } from './contexts/AuthContext';
 import { useService } from './hooks/useService';
 
 import { CreatePet } from './components/CreatePet/CreatePet';
@@ -16,6 +16,8 @@ import { Catalog } from "./components/Catalog/Catalog"
 import { PetDetails } from './components/PetDetails/PetDetails';
 import { Logout } from './components/Logout/Logout';
 import { EditPet } from './components/EditPet/EditPet';
+import { RouteGuard } from './components/common/RouteGuard';
+import { PetOwner } from './components/common/PetOwner';
 
 function App() {
     const navigate = useNavigate();
@@ -55,12 +57,19 @@ function App() {
                     <Routes>
                         <Route path='/' element={<Home />} />
                         <Route path='/login' element={<Login />} />
-                        <Route path='/logout' element={<Logout />} />
                         <Route path='/register' element={<Register />} />
-                        <Route path='/create-pet' element={<CreatePet onCreatePetSubmit={onCreatePetSubmit} />} />
                         <Route path='/catalog' element={<Catalog pets={pets} />} />
                         <Route path='/catalog/:petId' element={<PetDetails />} />
-                        <Route path='/catalog/:petId/edit' element={<EditPet onPetEditSubmit={onPetEditSubmit} />} />
+
+                        <Route element={<RouteGuard />}>
+                            <Route path='/catalog/:petId/edit' element={
+                                <PetOwner>
+                                    <EditPet />
+                                </PetOwner>} />
+                            <Route path='/create-pet' element={<CreatePet onCreatePetSubmit={onCreatePetSubmit} />} />
+                            <Route path='/logout' element={<Logout />} />
+                        </Route>
+
                     </Routes>
                 </main>
                 <Footer />

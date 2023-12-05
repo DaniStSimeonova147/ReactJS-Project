@@ -47,6 +47,7 @@ export const AuthProvider = ({
     const onLogout = async () => {
         await authService.logout();
         setAuth({});
+        navigate("/");
     };
 
     const contextValues = {
