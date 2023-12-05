@@ -36,14 +36,14 @@ const requester = async (method, token, url, data) => {
 };
 
 export const requestFactory = (token) => {
-    // if (!token) {
-    //     const serializedAuth = localStorage.getItem('auth');
+    if (!token) {
+        const serializedAuth = localStorage.getItem('auth');
 
-    //     if (serializedAuth) {
-    //         const auth = JSON.parse(serializedAuth);
-    //         token = auth.accessToken;
-    //     }
-    // }
+        if (serializedAuth) {
+            const auth = JSON.parse(serializedAuth);
+            token = auth.accessToken;
+        }
+    }
 
     return {
         get: requester.bind(null, 'GET', token),

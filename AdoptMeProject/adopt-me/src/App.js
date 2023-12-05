@@ -3,7 +3,7 @@ import { Routes, Route, useNavigate } from 'react-router-dom';
 
 import { petServiceFactory } from './services/petService';
 import { authServiceFactory } from './services/authService';
-import { AuthContext } from './contexts/AuthContext';
+import {  AuthProvider } from './contexts/AuthContext';
 import { useService } from './hooks/useService';
 
 import { CreatePet } from './components/CreatePet/CreatePet';
@@ -20,9 +20,7 @@ import { EditPet } from './components/EditPet/EditPet';
 function App() {
     const navigate = useNavigate();
     const [pets, setPets] = useState([]);
-    const [auth, setAuth] = useState({});
-    const petService = petServiceFactory(auth.accessToken);
-    const authService = authServiceFactory(auth.accessToken);
+    const petService = petServiceFactory();//auth.accessToken
 
     useEffect(() => {
         petService.getAll()
@@ -37,40 +35,6 @@ function App() {
         navigate('/catalog');
     }
 
-    const onLoginSubmit = async (data) => {
-        try {
-            const result = await authService.login(data);
-            setAuth(result);
-
-            navigate('/catalog');
-        } catch (error) {
-            console.log('Problem');
-        }
-
-    };
-
-    const onRegisterSubmit = async (values) => {
-        const { confirmPassword, ...registerData } = values;
-        if (confirmPassword !== registerData.password) {
-            return;
-        };
-
-        try {
-            const result = await authService.register(registerData);
-            setAuth(result);
-
-            navigate('/catalog');
-        } catch (error) {
-            console.log('Problem');
-        }
-
-    };
-
-    const onLogout = async (data) => {
-        await authService.logout();
-        setAuth({});
-    };
-
     const onPetEditSubmit = async (values) => {
         const result = await petService.edit(values._id, values);
 
@@ -80,18 +44,9 @@ function App() {
     };
 
 
-    const context = {
-        onLoginSubmit,
-        onRegisterSubmit,
-        onLogout,
-        userId: auth._id,
-        token: auth.accessToken,
-        userEmail: auth.email,
-        isAuthenticated: !!auth.accessToken,
-    };
 
     return (
-        <AuthContext.Provider value={context}>
+        <AuthProvider>
             <div id="box">
 
                 <Header />
@@ -110,7 +65,7 @@ function App() {
                 </main>
                 <Footer />
             </div>
-        </AuthContext.Provider>
+        </AuthProvider>
     );
 }
 

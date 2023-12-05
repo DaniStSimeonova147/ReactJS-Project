@@ -8,7 +8,7 @@ export const getAll = async (petId) => {
     const relationQuery = encodeURIComponent(`author=_ownerId:users`);
 
 
-    const result = await request.get(`${baseUrl}?where=${searchQuery}`);
+    const result = await request.get(`${baseUrl}?where=${searchQuery}&load=${relationQuery}`);
     const comments = Object.values(result);
     return comments;
 };

@@ -1,37 +1,43 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext, useReducer } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 
 import { petServiceFactory } from '../../services/petService';
 import { useService } from "../../hooks/useService";
+import * as commentService from '../../services/commentService';
 import { AuthContext } from "../../contexts/AuthContext";
+import { AddComment } from "./AddComment/AddComment";
+import { petReducer } from "../../reducers/petReducer";
 
 export const PetDetails = () => {
-    const { userId } = useContext(AuthContext);
-    const [username, setUsername] = useState('');
-    const [comment, setComment] = useState('');
     const { petId } = useParams();
-    const [pet, setPet] = useState({});
+    const { userId, isAuthenticated, userEmail } = useContext(AuthContext);
+    const [pet, dispatch] = useReducer(petReducer, {});
     const petService = useService(petServiceFactory);
     const navigate = useNavigate();
 
     useEffect(() => {
-        petService.getOne(petId)
-            .then(result => {
-                setPet(result);
-            });
+        Promise.all([
+            petService.getOne(petId),
+            commentService.getAll(petId),
+        ]).then(([petData, comments]) => {
+                const petState = {
+                    ...petData,
+                    comments,
+                };
+            
+            dispatch({type: 'PET_FETCH', payload: petState})
+        });
     }, [petId]);
 
-    const onCommentSubmit = async (e) => {
-        e.preventDefault();
-
-        const result = await petService.addComment(petId, {
-            username,
-            comment,
+    const onCommentSubmit = async (values) => {
+        const response = await commentService.create(petId, values.comment);
+        console.log(response);
+       
+        dispatch({
+            type: 'COMMENT_ADD',
+            payload: response,
+            userEmail,
         });
-
-        setPet(state => ({ ...state, comments: { ...state.comments, result } }));
-        setUsername('');
-        setComment('');
     };
 
     const isOwner = pet._ownerId === userId;
@@ -55,7 +61,7 @@ export const PetDetails = () => {
                                 <div className="location">
                                     <h3>
                                         <p>
-                                        {/* pet location */}
+                                            {/* pet location */}
                                             Location: <span>{pet.location}</span>
                                         </p>
                                         {/* IF the viewer is the creator of the pet */}
@@ -107,27 +113,18 @@ export const PetDetails = () => {
                     <h2>Comments:</h2>
                     <ul>
                         {/* <!-- list all comments htmlFor current pet (If any) --> */}
-                        {pet.comments && Object.values(pet.comments).map(x => (
+                        {pet.comments && pet.comments.map(x => (
                             <li key={x._id} className="comment">
-                                <p>{x.username}: {x.comment}</p>
+                                <p>{x.author.email}: {x.comment}</p>
                             </li>
                         ))}
                     </ul>
 
                     {/* <!-- Display paragraph: If there are no pet in the database --> */}
-                    {/* {!Object.values(pet.comments).length && (<p className="no-comment">No comments.</p>)} */}
-
+                    {!pet.comments?.length && (<p className="no-comment">No comments.</p>)}
                 </div>
-                {/* <!-- Add Comment ( Only htmlFor logged-in users, which is not creators of the current pet ) --> */}
-                <article className="create-comment">
-                    <label>Add new comment:</label>
-                    <form className="form" onSubmit={onCommentSubmit}>
-                        <input type="text" name="username" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
-                        <textarea name="comment" placeholder="Comment..." value={comment} onChange={(e) => setComment(e.target.value)}></textarea>
-                        <input className="btn-submit" type="submit" value="Add Comment" />
-                    </form>
-                </article>
             </div>
+            {isAuthenticated && <AddComment onCommentSubmit={onCommentSubmit} />}
         </section>
     );
 };
