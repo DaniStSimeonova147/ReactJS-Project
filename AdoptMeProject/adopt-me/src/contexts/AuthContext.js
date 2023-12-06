@@ -29,17 +29,17 @@ export const AuthProvider = ({
 
     const onRegisterSubmit = async (values) => {
         const { confirmPassword, ...registerData } = values;
-        if (confirmPassword !== registerData.password) {
-            return;
-        }
 
         try {
+        if (confirmPassword !== registerData.password) {
+              throw new Error ("Passwords don't match!");
+        }
             const result = await authService.register(registerData);
             setAuth(result);
 
             navigate('/catalog');
         } catch (error) {
-            console.log('Problem');
+            return alert(error.message);
         }
 
     };
