@@ -95,3 +95,13 @@
     cursor: pointer;
     
 }
+
+.no-comment {
+    
+    text-align: center;
+    width: 500px;
+    margin: 10px;
+    font-size: 24px;
+    background-color: rgba(48, 219, 241, 0.377);
+    border-radius: 50px;
+}
