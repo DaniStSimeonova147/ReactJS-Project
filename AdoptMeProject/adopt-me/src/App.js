@@ -15,6 +15,7 @@ import { Logout } from './components/Logout/Logout';
 import { EditPet } from './components/EditPet/EditPet';
 import { RouteGuard } from './components/common/RouteGuard';
 import { PetOwner } from './components/common/PetOwner';
+import { NotFound } from './components/NotFound';
 
 function App() {
 
@@ -40,7 +41,7 @@ function App() {
                                 <Route path='/create-pet' element={<CreatePet />} />
                                 <Route path='/logout' element={<Logout />} />
                             </Route>
-
+                            <Route path='*' element={<NotFound />} />
                         </Routes>
                     </main>
                     <Footer />

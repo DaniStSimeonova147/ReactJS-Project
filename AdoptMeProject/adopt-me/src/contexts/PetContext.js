@@ -21,9 +21,14 @@ export const PetProvider = ({
 
 
     const onCreatePetSubmit = async (data) => {
-        const newPet = await petService.create(data);
-        setPets(state => [...state, newPet]);
-        navigate('/catalog');
+        try {
+            const newPet = await petService.create(data);
+            setPets(state => [...state, newPet]);
+            navigate('/catalog');
+
+        } catch (error) {
+            return alert(error.message);
+        }
     }
 
     const onPetEditSubmit = async (values) => {
