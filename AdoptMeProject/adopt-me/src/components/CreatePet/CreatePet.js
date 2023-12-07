@@ -16,20 +16,6 @@ export const CreatePet = () => {
     contact: '',
   }, onCreatePetSubmit);
 
-  const [errors, setErrors] = useState({
-    isRequiredName: false,
-  });
-
-  const onNameBlur = useCallback(() => {
-    if (values.name === "") {
-      setErrors(state => ({ ...state, isRequiredName: true }));
-    } if (values.name.lenght < 2) {
-      setErrors(state => ({ ...state, isRequiredName: true }));
-    }
-    else {
-      setErrors(state => ({ ...state, isRequiredName: false }));
-    }
-  }, [values]);
 
   return (
     <section id="create-page" className="auth">
@@ -38,9 +24,8 @@ export const CreatePet = () => {
         {/* Start Add Pet Form */}
         <form id="create" method="POST" onSubmit={onSubmit}>
           <p>
-            <input value={values.name} onChange={changeHandler} onBlur={onNameBlur} type="text" id="name" name="name" placeholder="Name" />
+            <input value={values.name} onChange={changeHandler} type="text" id="name" name="name" placeholder="Name" />
           </p>
-          {errors.isRequiredName && <span style={{ color: "red" }}>Name should be at least 2 characters long!</span>}
           <p>
             <input value={values.type} onChange={changeHandler} type="text" id="type" name="type" placeholder="Type" />
           </p>

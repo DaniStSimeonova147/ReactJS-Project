@@ -1,4 +1,4 @@
-import { useState, useEffect, createContext, useContext } from 'react';
+import { useState, useEffect, createContext, useContext, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { petServiceFactory } from '../services/petService';
@@ -20,8 +20,12 @@ export const PetProvider = ({
     }, []);
 
 
-    const onCreatePetSubmit = async (data) => {
+    const onCreatePetSubmit = useCallback(async (data) => {
         try {
+            if (Object.values(data).includes("")) {
+                console.log(Number(data.age));
+                throw new Error('All fields are required!')
+            }
             const newPet = await petService.create(data);
             setPets(state => [...state, newPet]);
             navigate('/catalog');
@@ -29,7 +33,7 @@ export const PetProvider = ({
         } catch (error) {
             return alert(error.message);
         }
-    }
+    });
 
     const onPetEditSubmit = async (values) => {
         const result = await petService.edit(values._id, values);
