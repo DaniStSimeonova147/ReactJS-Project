@@ -9,18 +9,19 @@
 }
 
 .details-comments {
-    display: table-cell;
+    text-align: center;
+    padding: 0px 250px;
    
 }
 
 .create-comment {
+    padding-top: 20px;
     margin: 60px;
     position: relative;
     text-align: center;
-    width: 900px;
+    width: 1000px;
     height: auto;
     border-radius: 20px;
-    padding: 10px;
     box-sizing: border-box;
     background: rgba(48, 219, 241, 0.377);
     
@@ -28,7 +29,7 @@
 
 .create-comment>label {
     color: black;
-    font-size: 28px;
+    font-size: 34px;
     text-align: center;
     font-weight: 300px;
     line-height: normal;
@@ -37,13 +38,14 @@
 
 .form{
     display: flex;
+      align-items: center;
+      justify-content: center;
 }
 
 .create-comment .form input {
     background-color: white;
 	color: black;
 	width: 200px;
-	border-radius: 3px;
 	height: 30px;
     margin: 40px;
 }
@@ -55,7 +57,7 @@
 	font-weight: bold;
 	border: none;
 	width: 200px;
-	border-radius: 3px;
+	border-radius: 6px;
 	height: 30px;
 }
     
@@ -63,45 +65,40 @@
 
 .create-comment .form textarea {
     color: black;
-    width: 400px;
+    width: 600px;
     font-size: 22px;
     text-align: left;
     line-height: normal;
     
 }
 
+.info-section>.details-comments ul{
+    list-style-type: none; 
+    padding: 0;
+}
 .info-section>.details-comments li {
-    width: 400px;
-    display: inline-block;
-    position: static;
-    margin: 20px auto 25px auto;
-    box-shadow: 8px 8px 8px 0 rgba(0, 0, 0, 0.2), 12px 12px 20px 0 rgba(0, 0, 0, 0.19);
-    border-radius: 16px;
-    margin-left: 60px;
+    display: block;
+    width: 600px; 
+    margin: 3%;
+    box-sizing: border-box; 
+    box-shadow: 4px 4px 4px 0 rgba(0, 0, 0, 0.2), 12px 12px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 5px;
     background:  rgba(48, 219, 241, 0.377);
     color: black;
     
 }
 
 .comment p {
+    font-size: 20px;
     padding: 16px;
     
 }
 
-
-.create-comment>.button:hover {
-    background-color: #41425c;
-    color: white;
-    cursor: pointer;
-    
-}
-
 .no-comment {
-    
     text-align: center;
-    width: 500px;
-    margin: 10px;
-    font-size: 24px;
+    width: 600px;
+    margin: 20px 0px;
+    font-size: 34px;
     background-color: rgba(48, 219, 241, 0.377);
     border-radius: 50px;
 }

@@ -1,6 +1,7 @@
 import { useEffect, useState, useContext, useReducer } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 
+
 import { petServiceFactory } from '../../services/petService';
 import { useService } from "../../hooks/useService";
 import * as commentService from '../../services/commentService';
@@ -138,7 +139,14 @@ export const PetDetails = () => {
                     </ul>
 
                     {/* <!-- Display paragraph: If there are no pet in the database --> */}
-                    {!pet.comments?.length && (<p className="no-comment">No comments.</p>)}
+                    {!pet.comments?.length &&
+                        (<p className="no-comment">
+                            😿No comments yet!😿
+                            <br />
+                            Your comment may be the first!
+                            <br />
+                            🥇
+                        </p>)}
                 </div>
             </div>
             {isAuthenticated && <AddComment onCommentSubmit={onCommentSubmit} />}

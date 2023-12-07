@@ -112,7 +112,7 @@ main {
 main .container {
   position: relative;
   margin-top: 60px;
-  margin-left: 14%;
+  margin-left: 10%;
   width: 80%;
   display: flex;
   align-items: flex-start;
