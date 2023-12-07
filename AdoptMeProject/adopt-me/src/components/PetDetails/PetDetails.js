@@ -13,7 +13,7 @@ import { usePetContext } from "../../contexts/PetContext";
 export const PetDetails = () => {
     const { petId } = useParams();
     const { userId, isAuthenticated, userEmail } = useContext(AuthContext);
-    const {deletePet} = usePetContext();
+    const { deletePet } = usePetContext();
     const [pet, dispatch] = useReducer(petReducer, {});
     const petService = useService(petServiceFactory);
     const navigate = useNavigate();
@@ -23,24 +23,31 @@ export const PetDetails = () => {
             petService.getOne(petId),
             commentService.getAll(petId),
         ]).then(([petData, comments]) => {
-                const petState = {
-                    ...petData,
-                    comments,
-                };
-            
-            dispatch({type: 'PET_FETCH', payload: petState})
+            const petState = {
+                ...petData,
+                comments,
+            };
+
+            dispatch({ type: 'PET_FETCH', payload: petState })
         });
     }, [petId]);
 
     const onCommentSubmit = async (values) => {
-        const response = await commentService.create(petId, values.comment);
-        console.log(response);
-       
-        dispatch({
-            type: 'COMMENT_ADD',
-            payload: response,
-            userEmail,
-        });
+        try {
+            if (Object.values(values).includes("")) {
+                throw new Error('Comment can not be empty!')
+            }
+            const response = await commentService.create(petId, values.comment);
+            console.log(response);
+
+            dispatch({
+                type: 'COMMENT_ADD',
+                payload: response,
+                userEmail,
+            });
+        } catch (error) {
+            return alert(error.message);
+        }
     };
 
     const isOwner = pet._ownerId === userId;

@@ -62,14 +62,6 @@ export const Header = () => {
                   </Link>
                 </li>
               )}
-              {isAuthenticated && (
-                <li className="nav-item">
-                  {/* Link to Profile Page */}
-                  <Link to="#">
-                    <i>Profile</i>
-                  </Link>
-                </li>
-              )}
             </ul>
           </div>
         </div>
