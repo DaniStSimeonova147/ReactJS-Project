@@ -34,28 +34,28 @@ export const EditPet = () => {
                 {/* Start Edit Pet Form */}
                 <form id="create" method="POST" onSubmit={onSubmit}>
                     <p>
-                        <input value={values.name} onChange={changeHandler} type="text" id="name" name="name" />
+                        <input value={values.name} onChange={changeHandler} type="text" id="name" name="name" placeholder="Name" />
                     </p>
                     <p>
-                        <input value={values.type} onChange={changeHandler} type="text" id="type" name="type" />
+                        <input value={values.type} onChange={changeHandler} type="text" id="type" name="type" placeholder="Type"  />
                     </p>
                     <p>
-                        <input value={values.age} onChange={changeHandler} type="number" id="age" name="age" />
+                        <input value={values.age} onChange={changeHandler} type="number" id="age" name="age"  placeholder="Age"  />
                     </p>
                     <p>
                         <textarea
-                            value={values.description} onChange={changeHandler} type="text" id="description" name="description"
+                            value={values.description} onChange={changeHandler} type="text" id="description" name="description" placeholder="Description"
 
                         />
                     </p>
                     <p>
-                        <input value={values.imageUrl} onChange={changeHandler} type="text" id="imageUrl" name="imageUrl" />
+                        <input value={values.imageUrl} onChange={changeHandler} type="text" id="imageUrl" name="imageUrl" placeholder="Link to image" />
                     </p>
                     <p>
-                        <input value={values.location} onChange={changeHandler} type="text" id="location" name="location" />
+                        <input value={values.location} onChange={changeHandler} type="text" id="location" name="location" placeholder="Location"/>
                     </p>
                     <p>
-                        <input value={values.contact} onChange={changeHandler} type="text" id="contact" name="contact" />
+                        <input value={values.contact} onChange={changeHandler} type="text" id="contact" name="contact" placeholder="Contacts (phone number, email...)" />
                     </p>
                     {/* Edit Pet Button */}
                     <button class="edit-btn" type="submit">Edit Pet</button>

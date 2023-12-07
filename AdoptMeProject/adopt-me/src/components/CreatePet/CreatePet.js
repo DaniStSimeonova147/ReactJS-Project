@@ -44,7 +44,7 @@ export const CreatePet = () => {
             <input value={values.location} onChange={changeHandler} type="text" id="location" name="location" placeholder="Location" />
           </p>
           <p>
-            <input value={values.contact} onChange={changeHandler} type="text" id="contact" name="contact" placeholder="Contacts" />
+            <input value={values.contact} onChange={changeHandler} type="text" id="contact" name="contact" placeholder="Contacts (phone number, email...)" />
           </p>
           {/* Add Pet Button */}
           <button className="add-btn" type="submit">

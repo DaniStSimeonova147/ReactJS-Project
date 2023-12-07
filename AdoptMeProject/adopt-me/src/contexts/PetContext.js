@@ -23,24 +23,27 @@ export const PetProvider = ({
     const onCreatePetSubmit = useCallback(async (data) => {
         try {
             if (Object.values(data).includes("")) {
-                console.log(Number(data.age));
                 throw new Error('All fields are required!')
             }
             const newPet = await petService.create(data);
             setPets(state => [...state, newPet]);
             navigate('/catalog');
-
         } catch (error) {
             return alert(error.message);
         }
     });
 
     const onPetEditSubmit = async (values) => {
-        const result = await petService.edit(values._id, values);
-
-        setPets(state => state.map(x => x._id === values._id ? result : x));
-
-        navigate(`/catalog/${values._id}`);
+        try {
+            if (Object.values(values).includes("")) {
+                throw new Error('All fields are required!')
+            }
+            const result = await petService.edit(values._id, values);
+            setPets(state => state.map(x => x._id === values._id ? result : x));
+            navigate(`/catalog/${values._id}`);
+        } catch (error) {
+            return alert(error.message);
+        }
     };
 
     const deletePet = (petId) => {
