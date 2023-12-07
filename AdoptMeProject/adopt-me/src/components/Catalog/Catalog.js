@@ -1,5 +1,6 @@
-import { usePetContext } from "../../contexts/PetContext";
-import { CatalogItem } from "./CatalogItem/CatalogItem";
+import { usePetContext } from '../../contexts/PetContext';
+
+import { CatalogItem } from './CatalogItem/CatalogItem';
 
 export const Catalog = () => {
     const {pets} = usePetContext();

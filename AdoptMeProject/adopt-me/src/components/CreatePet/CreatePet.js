@@ -1,7 +1,5 @@
-import { useState, useCallback } from "react";
-
-import { useForm } from "../../hooks/useForm";
-import { usePetContext } from "../../contexts/PetContext";
+import { useForm } from '../../hooks/useForm';
+import { usePetContext } from '../../contexts/PetContext';
 
 export const CreatePet = () => {
   const { onCreatePetSubmit } = usePetContext();

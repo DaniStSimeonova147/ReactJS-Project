@@ -1,15 +1,15 @@
-import { useEffect, useState, useContext, useReducer } from "react";
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useEffect, useState, useContext, useReducer } from 'react';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 
 
 import { petServiceFactory } from '../../services/petService';
-import { useService } from "../../hooks/useService";
 import * as commentService from '../../services/commentService';
-import { AuthContext } from "../../contexts/AuthContext";
+import { useService } from '../../hooks/useService';
+import { usePetContext } from '../../contexts/PetContext';
 
-import { AddComment } from "./AddComment/AddComment";
-import { petReducer } from "../../reducers/petReducer";
-import { usePetContext } from "../../contexts/PetContext";
+import { petReducer } from '../../reducers/petReducer';
+import { AuthContext } from '../../contexts/AuthContext';
+import { AddComment } from './AddComment/AddComment';
 
 export const PetDetails = () => {
     const { petId } = useParams();

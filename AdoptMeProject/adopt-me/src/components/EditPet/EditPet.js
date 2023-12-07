@@ -1,10 +1,10 @@
-import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
-import { useForm } from "../../hooks/useForm";
-import { useService } from "../../hooks/useService";
-import { petServiceFactory } from "../../services/petService";
-import { usePetContext } from "../../contexts/PetContext";
+import { useForm } from '../../hooks/useForm';
+import { useService } from '../../hooks/useService';
+import { usePetContext } from '../../contexts/PetContext';
+import { petServiceFactory } from '../../services/petService';
 
 export const EditPet = () => {
     const {onPetEditSubmit} = usePetContext();

@@ -1,8 +1,9 @@
-import { useContext, useState, useCallback } from "react";
-import { Link } from "react-router-dom";
+import { useContext, useState, useCallback } from 'react';
+import { Link } from 'react-router-dom';
 
-import { AuthContext } from "../../contexts/AuthContext";
-import { useForm } from "../../hooks/useForm";
+import { useForm } from '../../hooks/useForm';
+
+import { AuthContext } from '../../contexts/AuthContext';
 
 export const Register = () => {
   const { onRegisterSubmit } = useContext(AuthContext);
