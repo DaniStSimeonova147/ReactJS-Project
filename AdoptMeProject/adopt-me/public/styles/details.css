@@ -33,7 +33,6 @@
 
 .petDescription {
   font-size: 18px;
-  margin-left: 10px;
 }
 
 .pet-details {
@@ -110,7 +109,7 @@
 
 .message {
   font-weight: 400;
-  margin-top: 5px;
+  margin: 10px;
   font-size: 14px;
   color: #777;
   line-height: 1.5em;
