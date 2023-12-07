@@ -1,21 +1,28 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 
 import { BrowserRouter } from 'react-router-dom';
 import { CatalogItem } from './CatalogItem';
 
 describe('CatalogItem', () => {
-    test('Show name', () => {
-        const name = 'Test Name';
-
+    const testItem = {
+        _id: '1',
+        name: 'Ro',
+        type: 'dog',
+        imageUrl: '/test.jpg',
+      };
+    
+      it('Renders the CatalogItem component', () => {
         render(
-            <BrowserRouter>
-                <CatalogItem _id={'id'} name={name} />
-            </BrowserRouter>
+          <BrowserRouter>
+            <CatalogItem {...testItem} />
+          </BrowserRouter>
         );
-
-        expect(screen.queryByText(name)).toBeInTheDocument()
-    });
+    
+        expect(screen.getByAltText('post')).toBeInTheDocument();
+        expect(screen.getByText('Name: Ro')).toBeInTheDocument();
+        expect(screen.getByText('Type: dog')).toBeInTheDocument();
+        expect(screen.getByText('See details')).toBeInTheDocument();
+      });
 
 });
