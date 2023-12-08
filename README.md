@@ -16,24 +16,24 @@ This part of the application is designed for non-registered users. These users h
 * Login/Register Page -> This page appears when you click on Header's sign-in icon. If you don't have profile, you can switch to sign-up form..
 
 ## Private part (Available for Registered Users)
-Logged in users have access to the following:
+### Logged in users have access to the following:
 * Create Pet Page -> You can create an animal that is homeless, it is added to the waiting list.
 * Add Comment -> You can add a comment to any animal on the waiting list
-Logged in user (author) have access tot the following:
+### Logged in user (author) have access tot the following:
 * Edit PetPage -> You can change the information about the animal you created
 * Delete Option -> You can delete the animal you added.
 
 ## Technical Details
-Client (adopt-me):
+### Client (adopt-me):
 * If you want to run the project, you have package.json file in the main client folder.
 
-$ npm install
-$ npm start
+npm install
+npm start
 
-Server:
-*The server used in the project is Softuni practice server.
+### Server:
+* The server used in the project is Softuni practice server.
 This is a REST service, created for educational purposes. A compiled bundle should be available with every exercise's resources. To execute it, run the included start.bat file, or manually open a command prompt and run:
 
-$ node .\server.js  
+ node .\server.js  
 
-*It was modified, so the initial users have admin role and the initial collecitons are changed. If you want more details, read its documentation.
+* It was modified, so the initial users have admin role and the initial collecitons are changed. If you want more details, read its documentation.
