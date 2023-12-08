@@ -42,7 +42,6 @@ This is a REST service, created for educational purposes. A compiled bundle shou
 The service is initialized with three users, which can be used for immediate testing:
 
 #### peter@abv.bg : 123456
-#### george@abv.bg : 123456
-#### admin@abv.bg : admin 
+#### john@abv.bg : 123456
 
 ## If you want more details, read its documentation.
