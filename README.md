@@ -31,8 +31,7 @@ npm install
 npm start
 
 ### Server:
-* [Softuni practice server](#Softuni practice server)
-* The server used in the project is Softuni practice server.
+* The server used in the project is Softuni practice server https://github.com/softuni-practice-server/softuni-practice-server.
 This is a REST service, created for educational purposes. A compiled bundle should be available with every exercise's resources. To execute it, run the included start.bat file, or manually open a command prompt and run:
 
  node .\server.js  
@@ -42,8 +41,8 @@ This is a REST service, created for educational purposes. A compiled bundle shou
 * Authentication
 The service is initialized with three users, which can be used for immediate testing:
 
-peter@abv.bg : 123456
-george@abv.bg : 123456
-admin@abv.bg : admin 
+#### peter@abv.bg : 123456
+#### george@abv.bg : 123456
+#### admin@abv.bg : admin 
 
 ## If you want more details, read its documentation.
