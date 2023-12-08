@@ -21,18 +21,19 @@ Logged in users have access to the following:
 * Add Comment -> You can add a comment to any animal on the waiting list
 Logged in user (author) have access tot the following:
 * Edit PetPage -> You can change the information about the animal you created
-Delete фунцтион -> You can delete the animal you added.
+* Delete Option -> You can delete the animal you added.
 
 ## Technical Details
 Client (adopt-me):
-If you want to run the project, you have package.json file in the main client folder.
+* If you want to run the project, you have package.json file in the main client folder.
 
-npm install
-npm start
+$ npm install
+$ npm start
 
 Server:
-The server used in the project is Softuni practice server.
-This is a REST service, created for educational purposes. A compiled bundle should be available with every exercise's resources. To execute it, run the included start.bat file, or manually open a command prompt and run node .\server.js  
-node .\server.js  
+*The server used in the project is Softuni practice server.
+This is a REST service, created for educational purposes. A compiled bundle should be available with every exercise's resources. To execute it, run the included start.bat file, or manually open a command prompt and run:
 
-It was modified, so the initial users have admin role and the initial collecitons are changed. If you want more details, read its documentation.
+$ node .\server.js  
+
+*It was modified, so the initial users have admin role and the initial collecitons are changed. If you want more details, read its documentation.
