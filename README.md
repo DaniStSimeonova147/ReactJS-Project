@@ -3,7 +3,7 @@ SoftUni Emax 09.12.23
 
 ## Overview
 Design and implement a web application (Single Page Application) using React.js.
-Topic: Adopt me.
+### Topic: Adopt me.
 Web application for sharing animals for adoption.
 
 ![image](https://github.com/DaniStSimeonova147/ReactJS-Project/assets/48598905/e061c474-45ab-4ceb-a5dd-5486b7925f9d)
@@ -36,4 +36,13 @@ This is a REST service, created for educational purposes. A compiled bundle shou
 
  node .\server.js  
 
-* It was modified, so the initial users have admin role and the initial collecitons are changed. If you want more details, read its documentation.
+* It was modified, so the initial users have admin role and the initial collecitons are changed.
+
+* Authentication
+The service is initialized with three users, which can be used for immediate testing:
+
+peter@abv.bg : 123456
+george@abv.bg : 123456
+admin@abv.bg : admin 
+
+## If you want more details, read its documentation.
