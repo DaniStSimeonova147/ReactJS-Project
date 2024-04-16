@@ -13,7 +13,7 @@ Web application for sharing animals for adoption.
 * Home Page -> You can find basic information.
 * Wait List Page -> Catalog which contains all uploaded animals for adoption with the option to select the page for detailed information.
 * Pet Details Page -> A page offering more detailed information about each pet and section with comments.
-* Login/Register Page -> This page appears when you click on Header's sign-in icon. If you don't have profile, you can switch to sign-up form..
+* Login/Register Page -> This page appears when you click on Header's sign-in icon. If you don't have profile, you can switch to sign-up form.
 
 ## Private part (Available for Registered Users)
 ### Logged in users have access to the following:
