@@ -1,4 +1,6 @@
-const requester = async (method, url, data) => {
+import {HEADER_CONTENT_TYPE, CONTENT_TYPE_JSON} from '../constants/constants.js'
+
+const requester = async (method, token, url, data) => {
     const options = {};
 
     if (method !== 'GET') {
@@ -6,25 +8,19 @@ const requester = async (method, url, data) => {
 
         if (data) {
             options.headers = {
-                'content-type': 'application/json',
+                'content-type': CONTENT_TYPE_JSON,
             };
 
             options.body = JSON.stringify(data);
         }
     }
 
-    const serializedAuth = localStorage.getItem('auth');
-    if (serializedAuth) {
-        const auth = JSON.parse(serializedAuth);
-
-        if (auth.accessToken) {
-            options.headers = {
-                ...options.headers,
-                'X-Authorization': auth.accessToken,
-            };
-        }
+    if (token) {
+        options.headers = {
+            ...options.headers,
+            'X-Authorization': token,
+        };
     }
-
 
     const response = await fetch(url, options);
 
@@ -32,21 +28,29 @@ const requester = async (method, url, data) => {
         return {};
     }
 
-    const result = await response.json();
+    const contentType = response.headers.get(HEADER_CONTENT_TYPE);
 
-    if (!response.ok) {
-        throw result;
+    try {
+        if (response.ok && contentType === CONTENT_TYPE_JSON) {
+            const result = await response.json();
+            return result;
+        } else {
+            throw new Error('Invalid request');
+        }
+    } catch (error) {
+        return alert(error.message);
     }
 
-    return result;
 };
 
-export const requestFactory = () => {
+export const requestFactory = (token) => {
+
     return {
-        get: requester.bind(null, 'GET'),
-        post: requester.bind(null, 'POST'),
-        put: requester.bind(null, 'PUT'),
-        patch: requester.bind(null, 'PATCH'),
-        delete: requester.bind(null, 'DELETE'),
+        get: requester.bind(null, 'GET', token),
+        post: requester.bind(null, 'POST', token),
+        put: requester.bind(null, 'PUT', token),
+        patch: requester.bind(null, 'PATCH', token),
+        delete: requester.bind(null, 'DELETE', token),
+
     }
 };
