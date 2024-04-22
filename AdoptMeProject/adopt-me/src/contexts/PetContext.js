@@ -1,6 +1,8 @@
 import { useState, useEffect, createContext, useContext, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { useService } from "../hooks/useService";
+import { AuthContext } from '../contexts/AuthContext';
 import { petServiceFactory } from '../services/petService';
 
 export const PetContext = createContext();
@@ -10,7 +12,8 @@ export const PetProvider = ({
 }) => {
     const navigate = useNavigate();
     const [pets, setPets] = useState([]);
-    const petService = petServiceFactory();
+
+    const petService = useService(petServiceFactory);
 
     useEffect(() => {
         petService.getAll()
