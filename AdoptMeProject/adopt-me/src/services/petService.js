@@ -22,14 +22,14 @@ export const petServiceFactory = (token) => {
     };
 
     const create = async (petData) => {
-        const result = await request.post(url, petData);
+        const result = await request.post(url, petData, token);
 
         return result;
     };
 
-    const deletePet = (petId) => request.delete(`${url}/${petId}`);
+    const deletePet = (petId) => request.delete(`${url}/${petId}`, null, token);
 
-    const edit = (petId, data) => request.put(`${url}/${petId}`, data);
+    const edit = (petId, data) => request.put(`${url}/${petId}`, data, token);
 
     return {
         getAll,
