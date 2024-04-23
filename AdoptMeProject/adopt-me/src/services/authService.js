@@ -8,9 +8,8 @@ const url = `${baseUrl}/users`;
 export const authServiceFactory = (token) => {
     const request = requestFactory(token);
     return {
-        login: (data) => request.post(`${url}/login`, data),
-        register: (data) => request.post(`${url}/register`, data),
-        logout: () => request.get(`${url}/logout`),
-
+        login: (data) => request.post(`${url}/login`, data, token),
+        register: (data) => request.post(`${url}/register`, data, token),
+        logout: () => request.get(`${url}/logout`, null, token),
     }
 };
