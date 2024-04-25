@@ -1,4 +1,4 @@
-import { HEADER_CONTENT_TYPE, CONTENT_TYPE_JSON } from '../constants/constants.js'
+import {HEADER_CONTENT_TYPE, CONTENT_TYPE_JSON} from '../constants.js'
 
 const requester = async (method, url, data, token) => {
     const options = {};
