@@ -1,8 +1,8 @@
-import { useState, useEffect, createContext, useContext, useCallback } from 'react';
+import { useEffect, createContext, useContext, useCallback, useReducer } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { petActionsReducer } from '../reducers/petActionsReducer';
 import { useService } from "../hooks/useService";
-import { AuthContext } from '../contexts/AuthContext';
 import { petServiceFactory } from '../services/petService';
 
 export const PetContext = createContext();
@@ -11,14 +11,14 @@ export const PetProvider = ({
     children,
 }) => {
     const navigate = useNavigate();
-    const [pets, setPets] = useState([]);
+    const [pets, dispatch] = useReducer(petActionsReducer, []);
 
     const petService = useService(petServiceFactory);
 
     useEffect(() => {
         petService.getAll()
             .then(result => {
-                setPets(result)
+                dispatch({type: 'GET_PET', payload: result});
             })
     }, []);
 
@@ -29,7 +29,7 @@ export const PetProvider = ({
                 throw new Error('All fields are required!')
             }
             const newPet = await petService.create(data);
-            setPets(state => [...state, newPet]);
+            dispatch({type: 'CREATE_PET', payload: newPet});
             navigate('/catalog');
         } catch (error) {
             return alert(error.message);
@@ -42,7 +42,7 @@ export const PetProvider = ({
                 throw new Error('All fields are required!')
             }
             const result = await petService.edit(values._id, values);
-            setPets(state => state.map(x => x._id === values._id ? result : x));
+            dispatch({type: 'EDIT_PET', payload: result})
             navigate(`/catalog/${values._id}`);
         } catch (error) {
             return alert(error.message);
@@ -50,7 +50,7 @@ export const PetProvider = ({
     };
 
     const deletePet = (petId) => {
-        setPets(state => state.filter(pet => pet._id !== petId));
+        dispatch({type: 'DELETE_PET', payload: petId})
     };
 
     const getPet = (petId) => {
