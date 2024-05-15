@@ -4,12 +4,16 @@ import { PetProvider } from './contexts/PetContext';
 import { Header } from './components/Header/Header';
 import { Footer } from './components/Footer/Footer';
 import { Routing } from './routes/Routing';
+import { ToastContainer } from 'react-toastify';
+import { ToastProvider } from './components/Toast/ToastProvider';
 
 function App() {
 
     return (
+        <ToastProvider>
         <AuthProvider>
             <PetProvider>
+            
                 <div id="box">
                     <Header />
                     {/* <!-- Main Content --> */}
@@ -20,6 +24,7 @@ function App() {
                 </div>
             </PetProvider>
         </AuthProvider>
+        </ToastProvider>
     );
 }
 
