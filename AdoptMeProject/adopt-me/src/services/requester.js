@@ -1,4 +1,4 @@
-import {HEADER_CONTENT_TYPE, CONTENT_TYPE_JSON} from '../constants.js'
+import { HEADER_CONTENT_TYPE, CONTENT_TYPE_JSON } from '../constants.js'
 
 const requester = async (method, url, data, token) => {
     const options = {};
@@ -23,9 +23,6 @@ const requester = async (method, url, data, token) => {
     }
 
     const response = await fetch(url, options);
-    if (!response.ok) {
-        throw response;
-    }
 
     if (response.status === 204) {
         return {};
