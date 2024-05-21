@@ -6,24 +6,25 @@ import { Footer } from './components/Footer/Footer';
 import { Routing } from './routes/Routing';
 import { ToastContainer } from 'react-toastify';
 import { ToastProvider } from './components/Toast/ToastProvider';
+import { FetchInterceptor } from './components/FetchInterceptor/FetchInterceptor';
 
 function App() {
 
     return (
         <ToastProvider>
-        <AuthProvider>
-            <PetProvider>
-            
-                <div id="box">
-                    <Header />
-                    {/* <!-- Main Content --> */}
-                    <main id="main-content">
-                        <Routing />
-                    </main>
-                    <Footer />
-                </div>
-            </PetProvider>
-        </AuthProvider>
+            <AuthProvider>
+                <PetProvider>
+                    <FetchInterceptor />
+                    <div id="box">
+                        <Header />
+                        {/* <!-- Main Content --> */}
+                        <main id="main-content">
+                            <Routing />
+                        </main>
+                        <Footer />
+                    </div>
+                </PetProvider>
+            </AuthProvider>
         </ToastProvider>
     );
 }
