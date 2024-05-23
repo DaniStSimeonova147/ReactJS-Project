@@ -4,8 +4,7 @@ import { PetProvider } from './contexts/PetContext';
 import { Header } from './components/Header/Header';
 import { Footer } from './components/Footer/Footer';
 import { Routing } from './routes/Routing';
-import { ToastContainer } from 'react-toastify';
-import { ToastProvider } from './components/Toast/ToastProvider';
+import { ToastProvider } from './contexts/ToastContext';
 import { FetchInterceptor } from './components/FetchInterceptor/FetchInterceptor';
 
 function App() {

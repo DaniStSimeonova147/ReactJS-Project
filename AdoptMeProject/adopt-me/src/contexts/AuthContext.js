@@ -1,9 +1,8 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { authServiceFactory } from '../services/authService';
 import { useLocalStorage } from '../hooks/useLocalStorage';
-import { useToast } from '../components/Toast/ToastContext';
 
 export const AuthContext = createContext();
 
@@ -12,7 +11,6 @@ export const AuthProvider = ({
 }) => {
     const [auth, setAuth] = useLocalStorage('auth', {});
     const navigate = useNavigate();
-    const { addToast } = useToast();
 
     const authService = authServiceFactory(auth.accessToken);
 
