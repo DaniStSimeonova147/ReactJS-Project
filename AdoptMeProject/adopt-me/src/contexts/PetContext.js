@@ -18,39 +18,28 @@ export const PetProvider = ({
     useEffect(() => {
         petService.getAll()
             .then(result => {
-                dispatch({type: 'GET_PET', payload: result});
+                dispatch({ type: 'GET_PET', payload: result });
             })
     }, []);
 
-
     const onCreatePetSubmit = useCallback(async (data) => {
         try {
-            if (Object.values(data).includes("")) {
-                throw new Error('All fields are required!')
-            }
             const newPet = await petService.create(data);
-            dispatch({type: 'CREATE_PET', payload: newPet});
+            dispatch({ type: 'CREATE_PET', payload: newPet });
             navigate('/catalog');
-        } catch (error) {
-            return alert(error.message);
-        }
+        } catch (error) { }
     });
 
     const onPetEditSubmit = async (values) => {
         try {
-            if (Object.values(values).includes("")) {
-                throw new Error('All fields are required!')
-            }
             const result = await petService.edit(values._id, values);
-            dispatch({type: 'EDIT_PET', payload: result})
+            dispatch({ type: 'EDIT_PET', payload: result })
             navigate(`/catalog/${values._id}`);
-        } catch (error) {
-            return alert(error.message);
-        }
+        } catch (error) { }
     };
 
     const deletePet = (petId) => {
-        dispatch({type: 'DELETE_PET', payload: petId})
+        dispatch({ type: 'DELETE_PET', payload: petId })
     };
 
     const getPet = (petId) => {

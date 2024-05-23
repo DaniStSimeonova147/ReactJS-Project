@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import ToastContext from './ToastContext';
-import ToastContainer from './ToastConteiner';
+import React, { createContext, useContext, useState } from 'react';
+import ToastContainer from '../components/Toast/ToastContainer';
+
+const ToastContext = createContext();
 
 export const ToastProvider = ({ children }) => {
     const [toasts, setToasts] = useState([]);
@@ -19,4 +20,9 @@ export const ToastProvider = ({ children }) => {
                 toasts={toasts} onDelete={deleteToast} />
         </ToastContext.Provider>
     );
+};
+
+export const useToastContext = () =>{
+    const context = useContext(ToastContext);
+    return context;
 };
