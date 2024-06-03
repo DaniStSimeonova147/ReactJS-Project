@@ -44,10 +44,16 @@ export const AuthProvider = ({
         } catch (error) { }
     };
 
+    const resetAuth = () => {
+        setAuth({});
+        navigate('/');
+    };
+    
     const contextValues = {
         onLoginSubmit,
         onRegisterSubmit,
         onLogout,
+        resetAuth,
         userId: auth._id,
         token: auth.accessToken,
         userEmail: auth.email,
