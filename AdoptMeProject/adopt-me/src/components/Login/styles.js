@@ -1,7 +1,7 @@
 export const styles = {
     header: {
         fontFamily: "Indie Flower",
-        fontSize: '40px',
+        fontSize: '30px',
         textAlign: 'center',
         fontWeight: 900
     },
@@ -9,8 +9,8 @@ export const styles = {
         display: 'flex',
         alignItems: 'center',
         flexDirection: 'column',
-        width: 800, 
-        padding: '30px 40px',
+        width: 400, 
+        padding: '20px 30px',
         margin: '200px 50px 100px 50px ',
         border: '1px solid grey',
         borderRadius: '30px',
