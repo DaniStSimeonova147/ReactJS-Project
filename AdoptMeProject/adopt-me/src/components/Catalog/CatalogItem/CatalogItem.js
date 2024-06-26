@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
 
+import { Box, Button, Card, CardContent, CardMedia, Typography } from '@mui/material';
+
 export const CatalogItem = ({
     _id,
     name,
@@ -7,22 +9,33 @@ export const CatalogItem = ({
     imageUrl,
 }) => {
     return (
-        <div className="card">
-            <div className="imgBx">
-                <img
-                    src={imageUrl}
-                    alt="post"
-                    className="cover"
-                />
-            </div>
-            <h5 className="petName">Name: {name}</h5>
-            <h5 className="petType">Type: {type}</h5>
-            
-            {/* Link to Photo Details Page */}
-            <Link to={`/catalog/${_id}`} id="see-details">
-                <h4 className="details">See details</h4>
-            </Link>
-        </div>
+        <Card >
+            <CardMedia
+                component="img"
+                height="300"
+                image={imageUrl}
+                alt={name}
+            />
+            <CardContent>
+                <Typography variant="h6" component="div">
+                    Name: {name}
+                </Typography>
+                <Typography variant="body1" color="text.secondary">
+                    Type: {type}
+                </Typography>
+                <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        component={Link}
+                        to={`/catalog/${_id}`}
+                        style={{ marginTop: '10px' }}
+                    >
+                        See details
+                    </Button>
+                </Box>
+            </CardContent>
+        </Card>
     );
 };
 

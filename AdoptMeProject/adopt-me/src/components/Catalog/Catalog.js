@@ -1,24 +1,26 @@
-import { usePetContext } from '../../contexts/PetContext';
+import { Grid, Typography } from '@mui/material';
 
 import { CatalogItem } from './CatalogItem/CatalogItem';
+import { usePetContext } from '../../contexts/PetContext';
 
 export const Catalog = () => {
-    const {pets} = usePetContext();
+    const { pets } = usePetContext();
 
     return (
-        //{/* <!-- Catalogue --> */}
-        <section id="catalog-page" >
-            <div className="container">
-                <div className="col-9">
-                    {/* <!-- Display div: with information about every pet (if any) --> */}
-                    {pets.map(x => <CatalogItem key={x._id} {...x} />)}
-
-                    {/* <!-- Display paragraph: If there is no pets  --> */}
-                    {pets.length === 0 && (<article className="not-available-photo">
-                        <h1>No pets posts yet.</h1>
-                    </article>)}
-                </div>
-            </div>
-        </section>
+        <Grid container spacing={4} justifyContent="center">
+            {pets.length > 0 ? (
+                pets.map(x => (
+                    <Grid item>
+                        <CatalogItem {...x} />
+                    </Grid>
+                ))
+            ) : (
+                <Grid item xs={12}>
+                    <Typography variant="h3" align="center">
+                        No pets posts yet.
+                    </Typography>
+                </Grid>
+            )}
+        </Grid>
     );
 };
