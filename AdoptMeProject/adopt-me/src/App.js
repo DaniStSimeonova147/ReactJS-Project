@@ -6,7 +6,8 @@ import { Footer } from './components/Footer/Footer';
 import { Routing } from './routes/Routing';
 import { ToastProvider } from './contexts/ToastContext';
 import { FetchInterceptor } from './components/FetchInterceptor/FetchInterceptor';
-
+import { Layout } from './components/Layout/Layout';
+import { Box } from '@mui/material';
 function App() {
 
     return (
@@ -14,17 +15,10 @@ function App() {
             <AuthProvider>
                 <PetProvider>
                     <FetchInterceptor />
-                    <div id="box">
-                        <Header />
-                        {/* <!-- Main Content --> */}
-                        <main id="main-content">
-                            <Routing />
-                        </main>
-                        <Footer />
-                    </div>
+                    <Layout />
                 </PetProvider>
             </AuthProvider>
-        </ToastProvider>
+        </ToastProvider >
     );
 }
 
