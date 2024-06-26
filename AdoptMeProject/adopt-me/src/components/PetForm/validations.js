@@ -1,4 +1,5 @@
 import * as Yup from 'yup';
+import { TextField } from '@mui/material';
 
 export const petSchema = Yup.object().shape({
     name: Yup.string()
@@ -22,3 +23,16 @@ export const petSchema = Yup.object().shape({
         .required('Contact is required!')
         .min(5, 'Contact must be more than 5 symbols!'),
 });
+
+export const ErrorHandling = ({ field, form: { touched, errors }, ...props }) => (
+    <TextField
+        {...field}
+        {...props}
+        error={touched[field.name] && !!errors[field.name]}
+        helperText={touched[field.name] && errors[field.name]}
+        fullWidth
+        variant="filled"
+        size="small"
+        margin="dense"
+    />
+);
