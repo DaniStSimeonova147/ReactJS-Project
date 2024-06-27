@@ -9,7 +9,7 @@ export const Layout = () => {
   return (
     <Box
       sx={{
-        backgroundImage: 'url(images/14710.jpg)',
+        backgroundImage: 'url(images/backgroundImage.jpg)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
