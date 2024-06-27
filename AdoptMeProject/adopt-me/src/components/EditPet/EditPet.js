@@ -1,13 +1,15 @@
-import { Formik } from 'formik';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+
+import { Formik } from 'formik';
+import { Card, Typography } from '@mui/material';
 
 import { usePetContext } from '../../contexts/PetContext';
 import { useService } from '../../hooks/useService';
 import { petServiceFactory } from '../../services/petService';
 import { petSchema } from '../PetForm/validations';
 import { PetForm } from '../PetForm/PetForm';
-
+import { styles } from '../Login/styles';
 
 export const EditPet = () => {
     const { onPetEditSubmit } = usePetContext();
@@ -24,21 +26,20 @@ export const EditPet = () => {
     }, [petId]);
 
     return (
-        <section id="edit-page" className="auth">
-            <div className="editPage">
-                <h2>Edit pet</h2>
-                <Formik
-                    initialValues={petData}
-                    validationSchema={petSchema}
-                    onSubmit={(values) => {
-                        onPetEditSubmit(values);
-                    }}
-                    enableReinitialize
-                >
-                    <PetForm buttonType="Edit Pet"></PetForm>
-                </Formik>
-            </div>
-        </section>
-
+        <Card style={styles.form}>
+            <Typography style={styles.header} variant="h1">
+                Edit pet
+            </Typography>
+            <Formik
+                initialValues={petData || { name: '', type: '', age: '', description: '', imageUrl: '', location: '', contact: '' }}
+                validationSchema={petSchema}
+                onSubmit={(values) => {
+                    onPetEditSubmit(values);
+                }}
+                enableReinitialize
+            >
+                <PetForm buttonType="Edit Pet"></PetForm>
+            </Formik>
+        </Card >
     );
-}
+};
