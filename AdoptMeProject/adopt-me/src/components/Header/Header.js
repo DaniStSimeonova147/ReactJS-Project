@@ -1,71 +1,125 @@
-import { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { useContext, useState, useEffect } from 'react';
+
+import MenuIcon from '@mui/icons-material/Menu';
+import { AppBar, Drawer, IconButton, List, ListItemButton, Toolbar, } from '@mui/material';
 
 import { AuthContext } from '../../contexts/AuthContext';
 
+const styles = {
+  header: {
+    backgroundColor: "#2565ae",
+  },
+  link: {
+    fontFamily: "cursive",
+    color: "inherit",
+    fontSize: "24px",
+    fontWeight: 300,
+  },
+};
+
 export const Header = () => {
-  const { isAuthenticated, userEmail } = useContext(AuthContext);
+  const { isAuthenticated } = useContext(AuthContext);
+  const [openDrawer, setOpenDrawer] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 800);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 800);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  const toggleDrawer = () => {
+    setOpenDrawer(!openDrawer);
+  };
+
+  const closeDrawer = () => {
+    setOpenDrawer(false);
+  };
+
+  const drawerItems = (
+    <List>
+      <ListItemButton style={styles.link} component={Link} to="/" onClick={closeDrawer}>
+        Adopt ME{" "}
+      </ListItemButton>
+      {!isAuthenticated ? (
+        <>
+          <ListItemButton style={styles.link} component={Link} to="/login" onClick={closeDrawer}>
+            Login
+          </ListItemButton>
+          <ListItemButton style={styles.link} component={Link} to="/register" onClick={closeDrawer}>
+            Register
+          </ListItemButton>
+        </>
+      ) : (
+        <>
+          <ListItemButton style={styles.link} component={Link} to="/create-pet" onClick={closeDrawer}>
+            Add Pet
+          </ListItemButton>
+          <ListItemButton style={styles.link} component={Link} to="/logout" onClick={closeDrawer}>
+            Logout
+          </ListItemButton>
+        </>
+      )}
+      <ListItemButton style={styles.link} component={Link} to="/catalog" onClick={closeDrawer}>
+        Wait List
+      </ListItemButton>
+    </List>
+  );
 
   return (
-    <header>
-      <nav className="navbar">
-        <div className="container">
-          <div className="logo">
-            {/* Link to Home Page */}
-            <Link to="/">
-              <img width="50px" src="/images/homeLogo.png" alt="img1" />
-            </Link>
-            {/* Link to Home Page */}
-            <Link className="home" to="/">
-              <i>Adopt ME</i>
-            </Link>
-          </div>
-          <div className="nav-links">
-            <ul className="nav-group">
-              <li className="nav-item">
-                {/* Link to Catalog Page */}
-                <Link to="/catalog">
-                  <i>Wait List</i>
-                </Link>
-              </li>
-              {/*For Guest User*/}
-              {!isAuthenticated && (
-                <li className="nav-item">
-                  {/* Link to Login Page */}
-                  <Link to="/login">
-                    <i>Login</i>
-                  </Link>
-                </li>
-              )}
-              {!isAuthenticated && (
-                <li className="nav-item">
-                  {/* Link to Register Page */}
-                  <Link to="/register">
-                    <i>Register</i>
-                  </Link>
-                </li>
-              )}
-              {/*For login users*/}
-              {isAuthenticated && (
-                <li className="nav-item">
-                  {/* Link to Add Photo Page */}
-                  <Link to="/create-pet">
-                    <i>Add Pet</i>
-                  </Link>
-                </li>
-              )}
-              {isAuthenticated && (
-                <li className="nav-item">
-                  {/* Link to Logout Page */}
-                  <Link to="/Logout">
-                    <i>Logout</i>
-                  </Link>
-                </li>
-              )}
-            </ul>
-          </div>
-        </div>
-      </nav>
-    </header>
+    <AppBar style={styles.header} color="primary">
+      <Toolbar style={{ justifyContent: "space-between" }}>
+        <List style={{ display: "flex", alignItems: "center" }}>
+          <IconButton edge="start" color="inherit" component={Link} to="/">
+            <img width="50px" src="/images/homeLogo.png" alt="img1" />
+          </IconButton>
+          <ListItemButton style={styles.link} component={Link} to="/">
+            Adopt ME
+          </ListItemButton>
+        </List>
+        {isMobile ? (
+          <>
+            <IconButton edge="end" color="inherit" onClick={toggleDrawer}>
+              <MenuIcon />
+            </IconButton>
+            <Drawer anchor="right" open={openDrawer} onClose={toggleDrawer}>
+              {drawerItems}
+            </Drawer>
+          </>
+        ) : (
+          <List style={{ display: "flex", alignItems: "center" }}>
+            <ListItemButton style={styles.link} component={Link} to="/catalog">
+              Wait List
+            </ListItemButton>
+            {!isAuthenticated ? (
+              <>
+                <ListItemButton style={styles.link} component={Link} to="/login">
+                  Login
+                </ListItemButton>
+                <ListItemButton style={styles.link} component={Link} to="/register">
+                  Register
+                </ListItemButton>
+              </>
+            ) : (
+              <>
+                <ListItemButton style={styles.link} component={Link} to="/create-pet">
+                  Add Pet
+                </ListItemButton>
+                <ListItemButton style={styles.link} component={Link} to="/logout">
+                  Logout
+                </ListItemButton>
+              </>
+            )}
+          </List>
+        )}
+      </Toolbar>
+    </AppBar>
   );
 };
