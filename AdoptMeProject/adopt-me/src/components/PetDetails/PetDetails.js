@@ -1,6 +1,9 @@
 import { useEffect, useState, useContext, useReducer } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 
+import { Box, Button, Card, CardContent, CardMedia, Dialog, DialogTitle, DialogActions, List, ListItem, ListItemText, Typography } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 import { petServiceFactory } from '../../services/petService';
 import * as commentService from '../../services/commentService';
@@ -18,6 +21,7 @@ export const PetDetails = () => {
     const [pet, dispatch] = useReducer(petReducer, {});
     const petService = useService(petServiceFactory);
     const navigate = useNavigate();
+    const [open, setOpen] = useState(false);
 
     useEffect(() => {
         Promise.all([
@@ -36,7 +40,7 @@ export const PetDetails = () => {
     const onCommentSubmit = async (values) => {
         try {
             if (Object.values(values).includes("")) {
-                throw new Error('Comment can not be empty!')
+                throw new Error("Comment can not be empty!")
             }
             const response = await commentService.create(petId, values.comment);
             console.log(response);
@@ -53,104 +57,99 @@ export const PetDetails = () => {
 
     const isOwner = pet._ownerId === userId;
 
-    const onDeleteClick = async () => {
-        // eslint-disable-next-line no-restricted-globals
-        const result = confirm(`Are you sure you want to delete ${pet.name}?`);
-
-        if (result) {
-            await petService.delete(pet._id);
-
-            deletePet(pet._id);
-
-            navigate('/catalog');
-        }
+    const handleClickOpen = () => {
+        setOpen(true);
     };
 
+    const handleClose = () => {
+        setOpen(false);
+    };
 
+    const onDeleteClick = async () => {
+        await petService.delete(pet._id);
+        deletePet(pet._id);
+        navigate("/catalog");
+        handleClose();
+    };
     return (
-        <section id="pet-details">
-            <h1>Pet Details</h1>
-            <div className="info-section">
-
-                <div className="container">
-                    <div className="col-9">
-                        <div className="card-details">
-                            <div className="top">
-                                <div className="location">
-                                    <h3>
-                                        <p>
-                                            {/* pet location */}
-                                            Location: <span>{pet.location}</span>
-                                        </p>
-                                        {/* IF the viewer is the creator of the pet */}
-                                        <div className="edit-delete-btns">
-                                            {/* Edit Pet */}
-                                            {isOwner && (
-                                                <Link to={`/catalog/${pet._id}/edit`}>
-                                                    <img
-                                                        className="edit-img"
-                                                        src="/images/editLogo.png"
-                                                        alt="edit button"
-                                                    />
-                                                </Link>
-                                            )}
-                                            {/*Delete Pet  */}
-                                            {isOwner && (
-                                                <button className="button" onClick={onDeleteClick}>
-                                                    <img
-                                                        className="bin-img"
-                                                        src="/images/deleteLogo.png"
-                                                        alt="bin button"
-                                                    />
-                                                </button>
-                                            )}
-                                        </div>
-                                    </h3>
-                                </div>
-                            </div>
-                            {/* Start Pet Photo */}
-                            <div className="imgBx">
-                                <img src={pet.imageUrl} alt="post" className="cover" />
-                            </div>
-                            <div className="bottom">
-                                <p className="message">
-                                    <b className="petDescription">{pet.description}</b>
-                                </p>
-                                <div className="pet-details">
-                                    <p className="petName">Name: {pet.name}</p>
-                                    <p className="petType">Type: {pet.type}</p>
-                                    <p className="petAge">Age: {pet.age}</p>
-                                    <p className="petContactEmail">Contact: {pet.contact}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="details-comments">
-                    <h2>Comments:</h2>
-                    <ul>
-                        {/* <!-- list all comments htmlFor current pet (If any) --> */}
-                        {pet.comments && pet.comments.map(x => (
-                            <li key={x._id} className="comment">
-                                <p>{x.author.email}: {x.comment}</p>
-                            </li>
-                        ))}
-                    </ul>
-
-                    {/* <!-- Display paragraph: If there are no pet in the database --> */}
-                    {!pet.comments?.length &&
-                        (<p className="no-comment">
-                            😿No comments yet!😿
-                            <br />
-                            Your comment may be the first!
-                            <br />
-                            🥇
-                        </p>)}
-                </div>
-            </div>
+        <Card sx={{ padding: 3 }}>
+            <Typography sx={{
+                fontFamily: "cursive",
+                fontSize: "30px",
+                textAlign: "center",
+                fontWeight: 900,
+                mb: 2
+            }} variant="h1" >
+                Pet Details
+            </Typography>
+            <Box display="flex" flexDirection={{ xs: "column", md: "row" }}>
+                <CardMedia
+                    component="img"
+                    sx={{ width: { xs: "100%", md: 400, borderRadius: 20, boxShadow: "1px 1px 10px grey" } }}
+                    image={pet.imageUrl}
+                    alt={pet.name}
+                />
+                <Box display="flex" flexDirection="column" justifyContent="space-between" flexGrow={1}>
+                    <CardContent>
+                        <Typography variant="body1" fontWeight="900"> {pet.description}</Typography>
+                        <Box mt={2}>
+                            <Typography variant="body2">Name: {pet.name}</Typography>
+                            <Typography variant="body2">Type: {pet.type}</Typography>
+                            <Typography variant="body2">Age: {pet.age}</Typography>
+                            <Typography variant="body2">Contact: {pet.contact}</Typography>
+                            <Typography variant="body2">Location: {pet.location}</Typography>
+                        </Box>
+                        {isOwner && (
+                            <Box display="flex" justifyContent="center" sx={{ gap: 2, mt: 2 }} >
+                                <Button variant="outlined" startIcon={<EditIcon />} component={Link} to={`/catalog/${pet._id}/edit`}>
+                                    Edit
+                                </Button>
+                                <Button variant="outlined" startIcon={<DeleteIcon />} onClick={handleClickOpen}>
+                                    Delete
+                                </Button>
+                            </Box>
+                        )}
+                    </CardContent>
+                </Box>
+            </Box>
+            <Box mt={4}>
+                <Typography sx={{
+                    fontFamily: "cursive",
+                    fontSize: "30px",
+                    textAlign: "center",
+                    fontWeight: 900
+                }}  >
+                    Comments
+                </Typography>
+                <List>
+                    {pet.comments && pet.comments.map((x) => (
+                        <ListItem key={x._id}>
+                            <ListItemText primary={`${x.author.email}: ${x.comment}`} />
+                        </ListItem>
+                    ))}
+                </List>
+                {!pet.comments?.length && (
+                    <Typography textAlign="center" variant="h5" fontWeight="900" >
+                        😿 No comments yet! 😿 <br />
+                    </Typography>
+                )}
+            </Box>
             {isAuthenticated && <AddComment onCommentSubmit={onCommentSubmit} />}
-        </section>
+
+            <Dialog open={open} onClose={handleClose}>
+                <DialogTitle>
+                    Are you sure you want to delete {pet.name}?
+                </DialogTitle>
+                <DialogActions>
+                    <Button onClick={handleClose} color="primary">
+                        Cancel
+                    </Button>
+                    <Button onClick={onDeleteClick} color="primary">
+                        Delete
+                    </Button>
+                </DialogActions>
+            </Dialog>
+        </Card>
     );
 };
 
