@@ -1,21 +1,25 @@
 import { Link } from 'react-router-dom';
+import { Card, CardMedia, Button, Typography } from '@mui/material';
 
 export const NotFound = () => {
     return (
-        <section>
-            <div className="not-found-img">
-                <img src="/images/404pageLogo.gif" alt="404 not found gif" />
-            </div>
-            <div className="not-found">
-                <h1>
-                    Error 404,
-                    <br /> page not found.
-                </h1>
-
-                <Link to="/">
-                    <button>Return to Adopt ME</button>
-                </Link>
-            </div>
-        </section>
+        <Card sx={{ textAlign: 'center' }}>
+            <CardMedia
+                component="img"
+                image="/images/404pageLogo.gif" alt="404 not found gif"
+            />
+            <Typography variant="h5" >
+                Error 404, page not found.
+            </Typography>
+            <Button
+                variant="contained"
+                color="primary"
+                component={Link}
+                to="/"
+                style={{ margin: '10px' }}
+            >
+                Return to Adopt ME
+            </Button>
+        </Card>
     );
 };
