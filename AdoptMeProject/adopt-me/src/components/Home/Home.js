@@ -1,25 +1,48 @@
 import { Link } from 'react-router-dom';
+import { Container, Box, Button, Typography, Paper } from '@mui/material';
 
 export const Home = () => {
   return (
-    //  {/* <!--Home Page--> */}
-    <section id="welcome-world" className="welcome-content">
-      {/*Welcome Page*/}
-      <article className="welcome-content-text">
-        <h1>If you want to do a good deed...</h1>
-        <h1 className="bold-welcome">You can share your home with me!</h1>
-        <Link to="/catalog">
-          <img
-            width="300px"
-            src="images/pawsWaitListLogo.png"
-            alt="WaitList"
-          />
-        </Link>
-      </article>
-      <article className="welcome-content-image">
-        <img src="images/adopMeHomePic.jpg" alt="dog" />
-      </article>
-    </section>
-
+    <Container>
+      <Box>
+        <Paper
+          sx={{
+            padding: 2,
+            textAlign: "center",
+            backgroundColor: "rgba(255, 255, 255, 0.8)",
+          }}
+        >
+          <Typography variant="h4" gutterBottom>
+            Welcome to Adopt ME
+          </Typography>
+          <Typography variant="body1" paragraph>
+            You can share your home with me!
+          </Typography>
+          <Button
+            variant="contained"
+            color="primary"
+            component={Link}
+            to="/catalog"
+            style={{ marginTop: '10px' }}
+          >
+            Wait List
+          </Button>
+        </Paper>
+        <Paper
+          sx={{
+            minHeight: "30vh",
+            padding: 2,
+            backgroundImage: "url(images/homeImage.jpg)",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+        </Paper>
+      </Box>
+    </Container>
   );
 };
