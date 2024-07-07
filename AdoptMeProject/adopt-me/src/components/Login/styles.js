@@ -6,9 +6,10 @@ export const styles = {
         fontWeight: 900
     },
     form: {
-        alignItems: 'center',
         flexDirection: 'column',
         padding: '20px 30px',
+        marginTop: '150px',
+        marginBottom: '100px',
         border: '1px solid grey',
         borderRadius: '30px',
         boxShadow: '1px 1px 1px grey',
