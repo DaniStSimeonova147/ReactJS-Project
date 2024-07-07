@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 import { Formik } from 'formik';
-import { Card, Typography } from '@mui/material';
+import { Card, Container, Typography } from '@mui/material';
 
 import { usePetContext } from '../../contexts/PetContext';
 import { useService } from '../../hooks/useService';
@@ -26,20 +26,22 @@ export const EditPet = () => {
     }, [petId]);
 
     return (
-        <Card style={styles.form}>
-            <Typography style={styles.header} variant="h1">
-                Edit pet
-            </Typography>
-            <Formik
-                initialValues={petData || { name: '', type: '', age: '', description: '', imageUrl: '', location: '', contact: '' }}
-                validationSchema={petSchema}
-                onSubmit={(values) => {
-                    onPetEditSubmit(values);
-                }}
-                enableReinitialize
-            >
-                <PetForm buttonType="Edit Pet"></PetForm>
-            </Formik>
-        </Card >
+        <Container component="main" maxWidth="md" margin="auto">
+            <Card style={styles.form}>
+                <Typography style={styles.header} variant="h1">
+                    Edit pet
+                </Typography>
+                <Formik
+                    initialValues={petData || { name: '', type: '', age: '', description: '', imageUrl: '', location: '', contact: '' }}
+                    validationSchema={petSchema}
+                    onSubmit={(values) => {
+                        onPetEditSubmit(values);
+                    }}
+                    enableReinitialize
+                >
+                    <PetForm buttonType="Edit Pet"></PetForm>
+                </Formik>
+            </Card >
+        </Container>
     );
 };

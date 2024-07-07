@@ -7,7 +7,12 @@ export const Catalog = () => {
     const { pets } = usePetContext();
 
     return (
-        <Grid container spacing={4} justifyContent="center">
+        <Grid
+            xs={8} md={12}
+            container spacing={2}
+            margin="auto"
+            justifyContent="center"
+            sx={{ mt: 15, mb: 15 }}>
             {pets.length > 0 ? (
                 pets.map(x => (
                     <Grid item>
@@ -15,7 +20,7 @@ export const Catalog = () => {
                     </Grid>
                 ))
             ) : (
-                <Grid item xs={12}>
+                <Grid item xs={8}>
                     <Typography variant="h3" align="center">
                         No pets posts yet.
                     </Typography>
