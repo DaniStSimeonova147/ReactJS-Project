@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Grid } from '@mui/material';
+import { Container, Box, Grid } from '@mui/material';
 
 import { Header } from '../Header/Header';
 import { Routing } from '../../routes/Routing';
@@ -9,29 +9,20 @@ export const Layout = () => {
   return (
     <Box
       sx={{
-        backgroundImage: 'url(images/backgroundImage.jpg)',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
+        backgroundImage: "url(images/backgroundImage.jpg)",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        justifyContent: "space-between",
+        display: "flex",
+        minHeight: "100vh",
+        flexDirection: "column",
+
       }}
     >
-      <Grid
-        container
-        direction="column"
-        justifyContent="space-between"
-        display="flex"
-        minHeight="100vh"
-      >
-        <Grid item>
-          <Header />
-        </Grid>
-        <Grid item>
-          <Routing />
-        </Grid>
-        <Grid item>
-          <Footer />
-        </Grid>
-      </Grid>
+      <Header />
+      <Routing />
+      <Footer />
     </Box>
   );
 };
