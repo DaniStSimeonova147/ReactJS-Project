@@ -4,7 +4,7 @@ import { Formik, Form, Field } from 'formik';
 import { Card, Container, Button, Typography } from '@mui/material';
 
 
-import { styles } from '../Login/styles';
+import { styles } from './styles';
 import { registerSchema, ErrorHandling } from './validations';
 import { AuthContext } from '../../contexts/AuthContext';
 
