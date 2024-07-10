@@ -1,13 +1,12 @@
 import { AuthProvider } from './contexts/AuthContext';
 import { PetProvider } from './contexts/PetContext';
 
-import { Header } from './components/Header/Header';
-import { Footer } from './components/Footer/Footer';
-import { Routing } from './routes/Routing';
+
 import { ToastProvider } from './contexts/ToastContext';
 import { FetchInterceptor } from './components/FetchInterceptor/FetchInterceptor';
 import { Layout } from './components/Layout/Layout';
-import { Box } from '@mui/material';
+import { CssBaseline } from '@mui/material';
+
 function App() {
 
     return (
@@ -15,6 +14,7 @@ function App() {
             <AuthProvider>
                 <PetProvider>
                     <FetchInterceptor />
+                    <CssBaseline />
                     <Layout />
                 </PetProvider>
             </AuthProvider>
