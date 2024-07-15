@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Form, Field, Formik } from 'formik';
-import { Button, Card, Container, Typography } from '@mui/material';
 
+import { Button } from '@mui/material';
 import { useService } from '../../hooks/useService';
 import { usePetContext } from '../../contexts/PetContext';
 import { petServiceFactory } from '../../services/petService';
-import { styles } from './styles';
-import { ErrorHandling, petSchema } from './validations';
+
+import { petSchema } from './validations';
+import { ErrorHandlingStyled } from '../CardStyled/CardStyled';
 
 export const PetForm = ({ card }) => {
   const { onCreatePetSubmit, onPetEditSubmit } = usePetContext();
@@ -16,7 +17,7 @@ export const PetForm = ({ card }) => {
   const [petData, setPetData] = useState();
 
   useEffect(() => {
-    if (card === 'edit' && petId) {
+    if (card === "edit" && petId) {
       petService.getOne(petId)
         .then((result) => {
           setPetData(result);
@@ -43,38 +44,31 @@ export const PetForm = ({ card }) => {
   };
   {
     return (
-      <Container component="main" maxWidth="md" margin="auto">
-        <Card style={styles.form}>
-          <Typography style={styles.header} variant="h1">
-            {card === "edit" ? "Edit Pet" : "Add Pet"}
-          </Typography>
-          <Formik
-            initialValues={initialValues}
-            validationSchema={petSchema}
-            onSubmit={handleSubmit}
-            enableReinitialize
+      <Formik
+        initialValues={initialValues}
+        validationSchema={petSchema}
+        onSubmit={handleSubmit}
+        enableReinitialize
+      >
+        <Form >
+          <Field name="name" type="text" label="Name" component={ErrorHandlingStyled} variant="filled" />
+          <Field name="type" type="text" label="Type" component={ErrorHandlingStyled} variant="filled" />
+          <Field name="age" type="number" label="Age" component={ErrorHandlingStyled} variant="filled" />
+          <Field name="description" as="textarea" type="text" label="Description" component={ErrorHandlingStyled} variant="filled" />
+          <Field name="imageUrl" type="text" label="Link to image" component={ErrorHandlingStyled} variant="filled" />
+          <Field name="location" type="text" label="Location" component={ErrorHandlingStyled} variant="filled" />
+          <Field name="contact" type="text" label="Contacts (phone number, email...)" component={ErrorHandlingStyled} variant="filled" />
+          <Button
+            type="submit"
+            variant="contained"
+            color="info"
+            fullWidth
+            sx={{ mt: 3 }}
           >
-            <Form >
-              <Field name="name" type="text" label="Name" component={ErrorHandling} />
-              <Field name="type" type="text" label="Type" component={ErrorHandling} />
-              <Field name="age" type="number" label="Age" component={ErrorHandling} />
-              <Field name="description" as="textarea" type="text" label="Description" component={ErrorHandling} />
-              <Field name="imageUrl" type="text" label="Link to image" component={ErrorHandling} />
-              <Field name="location" type="text" label="Location" component={ErrorHandling} />
-              <Field name="contact" type="text" label="Contacts (phone number, email...)" component={ErrorHandling} />
-              <Button
-                type="submit"
-                variant="contained"
-                color="info"
-                fullWidth
-                sx={styles.button}
-              >
-                {card === "edit" ? "Edit Pet" : "Add Pet"}
-              </Button>
-            </Form>
-          </Formik>
-        </Card>
-      </Container>
+            {card === "edit" ? "Edit Pet" : "Add Pet"}
+          </Button>
+        </Form>
+      </Formik >
     );
   };
 };
