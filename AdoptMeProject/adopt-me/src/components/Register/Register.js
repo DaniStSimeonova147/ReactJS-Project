@@ -1,12 +1,11 @@
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { Formik, Form, Field } from 'formik';
-import { Card, Container, Button, Typography } from '@mui/material';
+import { Button, Container, Typography } from '@mui/material';
 
-
-import { styles } from './styles';
-import { registerSchema, ErrorHandling } from './validations';
+import { registerSchema } from './validations';
 import { AuthContext } from '../../contexts/AuthContext';
+import { CardStyled, ErrorHandlingStyled } from '../CardStyled/CardStyled';
 
 const initialValues = {
     email: '',
@@ -18,10 +17,7 @@ export const Register = () => {
     const { onRegisterSubmit } = useContext(AuthContext);
     return (
         <Container component="main" maxWidth="sm" margin="auto">
-            <Card style={styles.form} >
-                <Typography style={styles.header} variant="h1" >
-                    Adopt ME
-                </Typography>
+            <CardStyled headerContetnt="Adopt ME">
                 <Formik
                     initialValues={initialValues}
                     validationSchema={registerSchema}
@@ -31,40 +27,45 @@ export const Register = () => {
                 >
                     {() => (
                         <Form >
+
                             <Field
                                 name='email'
                                 type='email'
                                 label='Email'
-                                component={ErrorHandling}
+                                component={ErrorHandlingStyled}
                             />
                             <Field
                                 name='password'
                                 type='password'
                                 label='Password'
-                                component={ErrorHandling}
+                                component={ErrorHandlingStyled}
                             />
                             <Field
                                 name='confirmPassword'
                                 type='password'
                                 label='Repeat Password'
-                                component={ErrorHandling}
+                                component={ErrorHandlingStyled}
                             />
                             <Button
-                                type='submit'
-                                variant='contained'
-                                color='info'
+                                type="submit"
+                                variant="contained"
+                                color="info"
                                 fullWidth
-                                sx={styles.button}
+                                sx={{
+                                    marginTop: '20px',
+                                    marginBottom: '10px',
+                                    backgroundColor: 'black',
+                                }}
                             >
                                 Register
                             </Button>
+                            <Typography variant="overline">
+                                Have an account? <Link to="/login">LogIn</Link>
+                            </Typography>
                         </Form>
                     )}
                 </Formik>
-                <Typography variant="overline">
-                    Have an account? <Link to="/login">LogIn</Link>
-                </Typography>
-            </Card>
+            </CardStyled>
         </Container>
     );
 };
