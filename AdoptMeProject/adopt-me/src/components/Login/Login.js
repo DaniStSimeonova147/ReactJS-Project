@@ -1,11 +1,11 @@
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { Formik, Form, Field } from 'formik';
-import { Card, Container, Button, Typography } from '@mui/material';
+import { Button, Container, Typography } from '@mui/material';
 
-import { styles } from './styles';
-import { loginSchema, ErrorHandling } from './validations';
+import { loginSchema } from './validations';
 import { AuthContext } from '../../contexts/AuthContext';
+import { CardStyled, ErrorHandlingStyled } from '../CardStyled/CardStyled';
 
 
 const initialValues = {
@@ -18,14 +18,12 @@ export const Login = () => {
 
   return (
     <Container component="main" maxWidth="sm" margin="auto">
-      <Card style={styles.form}>
-        <Typography style={styles.header} variant="h1" >
-          Adopt ME
-        </Typography>
+      <CardStyled headerContetnt="Adopt ME">
         <Formik
           initialValues={initialValues}
           validationSchema={loginSchema}
           onSubmit={(values) => {
+            console.log('login')
             onLoginSubmit(values);
           }}
         >
@@ -35,30 +33,34 @@ export const Login = () => {
                 name="email"
                 type="email"
                 label="Email"
-                component={ErrorHandling}
+                component={ErrorHandlingStyled}
               />
               <Field
                 name="password"
                 type="password"
                 label="Password"
-                component={ErrorHandling}
+                component={ErrorHandlingStyled}
               />
               <Button
                 type="submit"
                 variant="contained"
                 color="info"
                 fullWidth
-                sx={styles.button}
+                sx={{
+                  marginTop: '20px',
+                  marginBottom: '10px',
+                  backgroundColor: 'black',
+                }}
               >
                 Login
               </Button>
+              <Typography variant="overline">
+                Don't have account? <Link to="/register">Register</Link>
+              </Typography>
             </Form>
           )}
         </Formik>
-        <Typography variant="overline">
-          Don't have account? <Link to="/register">Register</Link>
-        </Typography>
-      </Card>
+      </CardStyled>
     </Container>
   );
 };
