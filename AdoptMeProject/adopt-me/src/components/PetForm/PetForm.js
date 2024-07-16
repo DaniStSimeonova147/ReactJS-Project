@@ -42,33 +42,32 @@ export const PetForm = ({ card }) => {
       onCreatePetSubmit(valuse)
     }
   };
-  {
-    return (
-      <Formik
-        initialValues={initialValues}
-        validationSchema={petSchema}
-        onSubmit={handleSubmit}
-        enableReinitialize
-      >
-        <Form >
-          <Field name="name" type="text" label="Name" component={ErrorHandlingStyled} variant="filled" />
-          <Field name="type" type="text" label="Type" component={ErrorHandlingStyled} variant="filled" />
-          <Field name="age" type="number" label="Age" component={ErrorHandlingStyled} variant="filled" />
-          <Field name="description" as="textarea" type="text" label="Description" component={ErrorHandlingStyled} variant="filled" />
-          <Field name="imageUrl" type="text" label="Link to image" component={ErrorHandlingStyled} variant="filled" />
-          <Field name="location" type="text" label="Location" component={ErrorHandlingStyled} variant="filled" />
-          <Field name="contact" type="text" label="Contacts (phone number, email...)" component={ErrorHandlingStyled} variant="filled" />
-          <Button
-            type="submit"
-            variant="contained"
-            color="info"
-            fullWidth
-            sx={{ mt: 3 }}
-          >
-            {card === "edit" ? "Edit Pet" : "Add Pet"}
-          </Button>
-        </Form>
-      </Formik >
-    );
-  };
+
+  return (
+    <Formik
+      initialValues={initialValues}
+      validationSchema={petSchema}
+      onSubmit={handleSubmit}
+      enableReinitialize
+    >
+      <Form>
+        <Field name="name" type="text" label="Name" component={ErrorHandlingStyled} variant="filled" />
+        <Field name="type" type="text" label="Type" component={ErrorHandlingStyled} variant="filled" />
+        <Field name="age" type="number" label="Age" component={ErrorHandlingStyled} variant="filled" />
+        <Field name="description" as="textarea" type="text" label="Description" component={ErrorHandlingStyled} variant="filled" />
+        <Field name="imageUrl" type="text" label="Link to image" component={ErrorHandlingStyled} variant="filled" />
+        <Field name="location" type="text" label="Location" component={ErrorHandlingStyled} variant="filled" />
+        <Field name="contact" type="text" label="Contacts (phone number, email...)" component={ErrorHandlingStyled} variant="filled" />
+        <Button
+          type="submit"
+          variant="contained"
+          color="info"
+          fullWidth
+          sx={{ mt: 3 }}
+        >
+          {card === "edit" ? "Edit Pet" : "Add Pet"}
+        </Button>
+      </Form>
+    </Formik>
+  );
 };
