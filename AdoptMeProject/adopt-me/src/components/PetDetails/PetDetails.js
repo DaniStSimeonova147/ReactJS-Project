@@ -6,7 +6,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 import { petServiceFactory } from '../../services/petService';
-import * as commentService from '../../services/commentService';
+import { commentServiceFactory } from '../../services/commentService';
 import { useService } from '../../hooks/useService';
 import { usePetContext } from '../../contexts/PetContext';
 
@@ -20,6 +20,7 @@ export const PetDetails = () => {
     const { deletePet } = usePetContext();
     const [pet, dispatch] = useReducer(petReducer, {});
     const petService = useService(petServiceFactory);
+    const commentService = useService(commentServiceFactory);
     const navigate = useNavigate();
     const [open, setOpen] = useState(false);
 
@@ -39,20 +40,13 @@ export const PetDetails = () => {
 
     const onCommentSubmit = async (values) => {
         try {
-            if (Object.values(values).includes("")) {
-                throw new Error("Comment can not be empty!")
-            }
             const response = await commentService.create(petId, values.comment);
-            console.log(response);
-
             dispatch({
                 type: 'COMMENT_ADD',
                 payload: response,
                 userEmail,
             });
-        } catch (error) {
-            return alert(error.message);
-        }
+        } catch (error) { }
     };
 
     const isOwner = pet._ownerId === userId;
@@ -113,25 +107,43 @@ export const PetDetails = () => {
                         </CardContent>
                     </Box>
                 </Box>
-                <Box mt={4}>
+                <Box mt={4} >
                     <Typography sx={{
                         fontFamily: "cursive",
                         fontSize: "30px",
                         textAlign: "center",
                         fontWeight: 900
                     }}  >
-                        Comments
+                        Comments:
                     </Typography>
                     <List>
-                        {pet.comments && pet.comments.map((x) => (
-                            <ListItem key={x._id}>
-                                <ListItemText primary={`${x.author.email}: ${x.comment}`} />
+                        {pet.comments && pet.comments.map((comment) => (
+                            <ListItem key={comment._id}
+                                sx={{
+                                    mt: 1,
+                                    backgroundColor: "rgba(37, 101, 174, 0.2)",
+                                    borderLeft: "5px solid #2565ae"
+                                }}>
+                                <ListItemText
+                                    primary={`${comment.author.email}: ${comment.comment}`}
+                                    sx={{ wordWrap: "break-word" }}
+                                />
                             </ListItem>
                         ))}
                     </List>
                     {!pet.comments?.length && (
-                        <Typography textAlign="center" variant="h5" fontWeight="900" >
-                            😿 No comments yet! 😿 <br />
+                        <Typography
+                            variant="h5"
+                            textAlign="center"
+                            fontFamily="cursive"
+                            sx={{
+                                color: "#FFFFFF",
+                                borderRadius: "30px",
+                                backgroundColor: "rgba(128, 128, 128, 0.5)",
+                                p: 3
+                            }}
+                        >
+                            No comments yet!
                         </Typography>
                     )}
                 </Box>
@@ -151,7 +163,7 @@ export const PetDetails = () => {
                     </DialogActions>
                 </Dialog>
             </Card>
-        </Container>
+        </Container >
     );
 };
 
