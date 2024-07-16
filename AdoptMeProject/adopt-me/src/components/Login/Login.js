@@ -7,7 +7,6 @@ import { loginSchema } from './validations';
 import { AuthContext } from '../../contexts/AuthContext';
 import { CardStyled, ErrorHandlingStyled } from '../CardStyled/CardStyled';
 
-
 const initialValues = {
   email: "",
   password: ""
@@ -18,12 +17,11 @@ export const Login = () => {
 
   return (
     <Container component="main" maxWidth="sm" margin="auto">
-      <CardStyled headerContetnt="Adopt ME">
+      <CardStyled headerContent="Adopt ME">
         <Formik
           initialValues={initialValues}
           validationSchema={loginSchema}
           onSubmit={(values) => {
-            console.log('login')
             onLoginSubmit(values);
           }}
         >

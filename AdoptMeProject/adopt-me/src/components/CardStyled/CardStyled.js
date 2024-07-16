@@ -2,12 +2,12 @@ import { Card, TextField, Typography } from "@mui/material";
 
 import { styles } from "./styles";
 
-export const CardStyled = ({ headerContetnt, children }) => {
+export const CardStyled = ({ headerContent, children }) => {
     return (
         <>
             <Card sx={styles.form}>
                 <Typography sx={styles.header}>
-                    {headerContetnt}
+                    {headerContent}
                 </Typography>
                 {children}
             </Card>

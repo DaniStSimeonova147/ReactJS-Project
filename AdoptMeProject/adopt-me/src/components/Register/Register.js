@@ -17,7 +17,7 @@ export const Register = () => {
     const { onRegisterSubmit } = useContext(AuthContext);
     return (
         <Container component="main" maxWidth="sm" margin="auto">
-            <CardStyled headerContetnt="Adopt ME">
+            <CardStyled headerContent="Adopt ME">
                 <Formik
                     initialValues={initialValues}
                     validationSchema={registerSchema}
@@ -26,7 +26,7 @@ export const Register = () => {
                     }}
                 >
                     {() => (
-                        <Form >
+                        <Form>
 
                             <Field
                                 name='email'
