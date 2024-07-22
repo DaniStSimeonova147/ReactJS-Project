@@ -163,7 +163,7 @@ export const PetDetails = () => {
                     </DialogActions>
                 </Dialog>
             </Card>
-        </Container >
+        </Container>
     );
 };
 
