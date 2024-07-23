@@ -1,35 +1,40 @@
-import { requestFactory } from './requester';
+import { db } from '../firebase';
+import { collection, doc, getDoc, getDocs, addDoc, updateDoc, deleteDoc } from 'firebase/firestore';
 
-const baseUrl = process.env.NODE_ENV === 'development'
-    ? 'http://localhost:3030'
-    : 'http://localhost:3030';  // TODO: Add server url when deployed
-const url = `${baseUrl}/data/pets`;
+export const petServiceFactory = () => {
 
-export const petServiceFactory = (token) => {
-    const request = requestFactory(token);
+    const petsCollectionRef = collection(db, 'pets');
 
     const getAll = async () => {
-        const result = await request.get(url);
-        const pets = Object.values(result);
-
+        const snapshot = await getDocs(petsCollectionRef);
+        const pets = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
         return pets;
     };
 
     const getOne = async (petId) => {
-        const result = await request.get(`${url}/${petId}`);
-        
-        return result;
+        const petDocumentRef = doc(db, 'pets', petId)
+        const snapshot = await getDoc(petDocumentRef);
+        const pet = { id: snapshot.id, ...snapshot.data() };
+        return pet;
     };
 
     const create = async (petData) => {
-        const result = await request.post(url, petData, token);
-
-        return result;
+        const petDocumentRef = await addDoc(petsCollectionRef, petData);
+        const pet = { id: petDocumentRef.id, ...petData };
+        return pet;
     };
 
-    const deletePet = (petId) => request.delete(`${url}/${petId}`, null, token);
+    const deletePet = async (petId) => {
+        const petDocumentRef = doc(db, 'pets', petId);
+        await deleteDoc(petDocumentRef);
+    };
 
-    const edit = (petId, data) => request.put(`${url}/${petId}`, data, token);
+    const edit = async (petId, data) => {
+        const petDocumentRef = doc(db, 'pets', petId);
+        await updateDoc(petDocumentRef, data);
+        const pet = { id: petId, ...data };
+        return pet;
+    };
 
     return {
         getAll,

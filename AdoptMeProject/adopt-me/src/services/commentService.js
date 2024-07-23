@@ -1,27 +1,28 @@
-import { requestFactory } from './requester';
+import { db } from '../firebase';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
 
-const baseUrl = process.env.NODE_ENV === 'development'
-    ? 'http://localhost:3030'
-    : 'http://localhost:3030';  // TODO: Add server url when deployed
-const url = `${baseUrl}/data/comments`;
-
-export const commentServiceFactory = (token) => {
-    const request = requestFactory(token);
+export const commentServiceFactory = () => {
 
     const getAll = async (petId) => {
-        const searchQuery = encodeURIComponent(`petId="${petId}"`);
-        const relationQuery = encodeURIComponent(`author=_ownerId:users`);
-
-
-        const result = await request.get(`${url}?where=${searchQuery}&load=${relationQuery}`);
-        const comments = Object.values(result);
+        const petDocumentRef = doc(db, 'pets', petId);
+        const snapshot = await getDoc(petDocumentRef);
+        const petData = snapshot.data();
+        const comments = petData.comments;
         return comments;
     };
 
     const create = async (petId, comment) => {
-        const result = await request.post(url, { petId, comment }, token);
-
-        return result;
+        const petDocumentRef = doc(db, 'pets', petId);
+        const snapshot = await getDoc(petDocumentRef);
+        const petData = snapshot.data();
+        const newComment = {
+            id: Math.random(),
+            comment: comment.comment,
+            authorEmail: comment.authorEmail
+        }
+        const comments = [...petData.comments, newComment];
+        await updateDoc(petDocumentRef, { comments: comments });
+        return newComment;
     };
 
     return {
