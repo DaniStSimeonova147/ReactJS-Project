@@ -4,6 +4,7 @@ import { Form, Field, Formik } from 'formik';
 
 import { Button } from '@mui/material';
 import { useService } from '../../hooks/useService';
+import { useAuthContext } from '../../contexts/AuthContext';
 import { usePetContext } from '../../contexts/PetContext';
 import { petServiceFactory } from '../../services/petService';
 
@@ -11,6 +12,7 @@ import { petSchema } from './validations';
 import { ErrorHandlingStyled } from '../CardStyled/CardStyled';
 
 export const PetForm = ({ card }) => {
+  const { userId } = useAuthContext();
   const { onCreatePetSubmit, onPetEditSubmit } = usePetContext();
   const { petId } = useParams();
   const petService = useService(petServiceFactory);
@@ -33,6 +35,8 @@ export const PetForm = ({ card }) => {
     imageUrl: '',
     location: '',
     contact: '',
+    ownerId: userId,
+    comments: [],
   };
 
   const handleSubmit = (valuse) => {

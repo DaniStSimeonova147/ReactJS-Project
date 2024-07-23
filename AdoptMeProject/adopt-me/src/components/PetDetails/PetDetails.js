@@ -40,7 +40,7 @@ export const PetDetails = () => {
 
     const onCommentSubmit = async (values) => {
         try {
-            const response = await commentService.create(petId, values.comment);
+            const response = await commentService.create(petId, { comment: values.comment, authorEmail: userEmail });
             dispatch({
                 type: 'COMMENT_ADD',
                 payload: response,
@@ -49,7 +49,7 @@ export const PetDetails = () => {
         } catch (error) { }
     };
 
-    const isOwner = pet._ownerId === userId;
+    const isOwner = pet.ownerId === userId;
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -60,11 +60,12 @@ export const PetDetails = () => {
     };
 
     const onDeleteClick = async () => {
-        await petService.delete(pet._id);
-        deletePet(pet._id);
+        await petService.delete(pet.id);
+        deletePet(pet.id);
         navigate("/catalog");
         handleClose();
     };
+
     return (
         <Container component="main" maxWidth="lg" margin="auto">
             <Card sx={{ padding: 3, mt: 20, mb: 10 }}>
@@ -96,7 +97,7 @@ export const PetDetails = () => {
                             </Box>
                             {isOwner && (
                                 <Box display="flex" justifyContent="center" sx={{ gap: 2, mt: 2 }} >
-                                    <Button variant="outlined" startIcon={<EditIcon />} component={Link} to={`/catalog/${pet._id}/edit`}>
+                                    <Button variant="outlined" startIcon={<EditIcon />} component={Link} to={`/catalog/${pet.id}/edit`}>
                                         Edit
                                     </Button>
                                     <Button variant="outlined" startIcon={<DeleteIcon />} onClick={handleClickOpen}>
@@ -118,14 +119,14 @@ export const PetDetails = () => {
                     </Typography>
                     <List>
                         {pet.comments && pet.comments.map((comment) => (
-                            <ListItem key={comment._id}
+                            <ListItem key={comment.id}
                                 sx={{
                                     mt: 1,
                                     backgroundColor: "rgba(37, 101, 174, 0.2)",
                                     borderLeft: "5px solid #2565ae"
                                 }}>
                                 <ListItemText
-                                    primary={`${comment.author.email}: ${comment.comment}`}
+                                    primary={`${comment.authorEmail || "Unknown Author"}: ${comment.comment}`}
                                     sx={{ wordWrap: "break-word" }}
                                 />
                             </ListItem>

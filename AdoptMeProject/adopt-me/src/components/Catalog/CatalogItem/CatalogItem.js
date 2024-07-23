@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Box, Button, Card, CardContent, CardMedia, Typography } from '@mui/material';
 
 export const CatalogItem = ({
-    _id,
+    id,
     name,
     type,
     imageUrl,
@@ -28,7 +28,7 @@ export const CatalogItem = ({
                         variant="contained"
                         color="primary"
                         component={Link}
-                        to={`/catalog/${_id}`}
+                        to={`/catalog/${id}`}
                         style={{ marginTop: '10px' }}
                     >
                         See details

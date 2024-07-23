@@ -5,9 +5,9 @@ export const petActionsReducer = (state, action) => {
         case 'CREATE_PET':
             return [...state, action.payload];
         case 'EDIT_PET':
-            return state.map(pet => pet._id === action.payload._id ? action.payload : pet);
+            return state.map(pet => pet.id === action.payload.id ? action.payload : pet);
         case 'DELETE_PET':
-            return state.filter(pet => pet._id !== action.payload);
+            return state.filter(pet => pet.id !== action.payload);
         default:
             return state;
     }
