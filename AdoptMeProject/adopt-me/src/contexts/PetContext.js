@@ -32,9 +32,9 @@ export const PetProvider = ({
 
     const onPetEditSubmit = async (values) => {
         try {
-            const result = await petService.edit(values._id, values);
+            const result = await petService.edit(values.id, values);
             dispatch({ type: 'EDIT_PET', payload: result })
-            navigate(`/catalog/${values._id}`);
+            navigate(`/catalog/${values.id}`);
         } catch (error) { }
     };
 
@@ -59,7 +59,7 @@ export const PetProvider = ({
             {children}
         </PetContext.Provider>
     )
-}
+};
 
 export const usePetContext = () => {
     const context = useContext(PetContext);
