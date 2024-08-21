@@ -31,7 +31,7 @@ export const FetchInterceptor = () => {
     }, []);
 
     const handleDefaultValidation = (error) => {
-        addToast({ id: crypto.randomUUID(), message: `Server error - ${error}`, type: "error" });
+        addToast({ id: crypto.randomUUID(), message: `Error - ${error}`, type: "error" });
     }
 
     const handleValidation = async (response) => {
@@ -39,10 +39,10 @@ export const FetchInterceptor = () => {
         let errorMessage = '';
 
         if (response.status === 401 || response.status === 403) {
-            errorMessage = errorData.message;
+            errorMessage = errorData.error.message;
             resetAuth();
         } else if (response.status >= 400) {
-            errorMessage = errorData.message;
+            errorMessage = errorData.error.message;
         } else {
             errorMessage = `Error: ${response.statusText}`;
         }
