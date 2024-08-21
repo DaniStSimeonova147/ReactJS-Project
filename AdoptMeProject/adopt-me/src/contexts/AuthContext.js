@@ -1,63 +1,68 @@
-import { createContext, useContext } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { auth } from '../firebase';
+import { onAuthStateChanged } from 'firebase/auth';
 import { authServiceFactory } from '../services/authService';
-import { useLocalStorage } from '../hooks/useLocalStorage';
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({
     children,
 }) => {
-    const [auth, setAuth] = useLocalStorage('auth', {});
     const navigate = useNavigate();
+    const authService = authServiceFactory();
+    const [currentUser, setCurrentUser] = useState(null);
 
-    const authService = authServiceFactory(auth.accessToken);
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            if (user) {
+                setCurrentUser(user);
+            } else {
+                setCurrentUser(null);
+            }
+        });
+        return unsubscribe();
+    }, []);
 
     const onLoginSubmit = async (data) => {
         try {
-            const result = await authService.login(data);
-
-            setAuth(result);
+            const user = await authService.login(data);
+            setCurrentUser(user);
             navigate('/catalog');
 
         } catch (error) { }
     };
-
     const onRegisterSubmit = async (values) => {
-        const { ...registerData } = values;
         try {
-            const result = await authService.register(registerData);
-
-            setAuth(result);
+            const user = await authService.register(values);
+            setCurrentUser(user);
             navigate('/catalog');
 
         } catch (error) { }
     };
-
     const onLogout = async () => {
         try {
             await authService.logout();
-            setAuth({});
+            setCurrentUser(null);
             navigate('/');
 
         } catch (error) { }
     };
-
     const resetAuth = () => {
-        setAuth({});
+        setCurrentUser({});
         navigate('/');
     };
-    
+
     const contextValues = {
         onLoginSubmit,
         onRegisterSubmit,
         onLogout,
         resetAuth,
-        userId: auth._id,
-        token: auth.accessToken,
-        userEmail: auth.email,
-        isAuthenticated: !!auth.accessToken,
+        user: currentUser,
+        userId: currentUser?.uid,
+        userEmail: currentUser?.email,
+        isAuthenticated: !!currentUser,
     };
 
     return (

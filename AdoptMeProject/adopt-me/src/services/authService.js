@@ -1,15 +1,29 @@
-import { requestFactory } from './requester';
+import { auth } from '../firebase';
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from 'firebase/auth';
 
-const baseUrl = process.env.NODE_ENV === 'development'
-    ? 'http://localhost:3030'
-    : 'http://localhost:3030';  // TODO: Add server url when deployed
-const url = `${baseUrl}/users`;
+export const authServiceFactory = () => {
 
-export const authServiceFactory = (token) => {
-    const request = requestFactory(token);
+    const login = async (data) => {
+        const { email, password } = data;
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+        return user;
+    };
+
+    const register = async (data) => {
+        const { email, password } = data;
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+        return user;
+    };
+
+    const logout = async () => {
+        await signOut(auth);
+    };
+
     return {
-        login: (data) => request.post(`${url}/login`, data, token),
-        register: (data) => request.post(`${url}/register`, data, token),
-        logout: () => request.get(`${url}/logout`, null, token),
-    }
+        login,
+        register,
+        logout,
+    };
 };
