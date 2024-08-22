@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { auth } from '../firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import { authServiceFactory } from '../services/authService';
+import { useLocalStorage } from '../hooks/useLocalStorage';
 
 export const AuthContext = createContext();
 
@@ -12,7 +13,7 @@ export const AuthProvider = ({
 }) => {
     const navigate = useNavigate();
     const authService = authServiceFactory();
-    const [currentUser, setCurrentUser] = useState(null);
+    const [currentUser, setCurrentUser] = useLocalStorage('currentUser', null);
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
