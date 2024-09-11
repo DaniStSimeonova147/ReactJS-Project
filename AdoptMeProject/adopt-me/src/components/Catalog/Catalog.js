@@ -8,14 +8,13 @@ export const Catalog = () => {
 
     return (
         <Grid
-            xs={8} md={12}
-            container spacing={2}
+            container
             margin="auto"
             justifyContent="center"
             sx={{ mt: 15, mb: 15 }}>
             {pets.length > 0 ? (
                 pets.map(x => (
-                    <Grid item>
+                    <Grid item xs={10} sm={6} md={5} lg={4} xl={2} key={x.id} margin="8px">
                         <CatalogItem {...x} />
                     </Grid>
                 ))
@@ -26,6 +25,6 @@ export const Catalog = () => {
                     </Typography>
                 </Grid>
             )}
-        </Grid>
+        </Grid >
     );
 };

@@ -10,12 +10,14 @@ export const CatalogItem = ({
 }) => {
     return (
         <Card >
-            <CardMedia
-                component="img"
-                height="300"
-                image={imageUrl}
-                alt={name}
-            />
+            <Link to={`/catalog/${id}`} >
+                <CardMedia
+                    component="img"
+                    height="auto"
+                    image={imageUrl}
+                    alt={name}
+                />
+            </Link>
             <CardContent>
                 <Typography variant="h6" component="div">
                     Name: {name}
