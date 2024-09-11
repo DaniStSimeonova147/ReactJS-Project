@@ -15,14 +15,22 @@ export const CardStyled = ({ headerContent, children }) => {
     );
 };
 
-export const ErrorHandlingStyled = ({ field, form: { touched, errors }, ...props }) => (
-    <TextField
-        {...field}
-        {...props}
-        error={touched[field.name] && !!errors[field.name]}
-        helperText={touched[field.name] && errors[field.name]}
-        fullWidth
-        size="small"
-        margin="dense"
-    />
-);
+export const ErrorHandlingStyled = ({ field, form: { touched, errors }, ...props }) => {
+    const errorText = touched[field.name] && errors[field.name];
+
+    return (
+        <TextField
+            {...field}
+            {...props}
+            error={!!errorText}
+            helperText={
+                errorText ? errorText.split('\n').map((err, index) => (
+                    <span key={index} style={{ display: "block" }}>{err}</span>
+                )) : null
+            }
+            fullWidth
+            size="small"
+            margin="dense"
+        />
+    )
+};
