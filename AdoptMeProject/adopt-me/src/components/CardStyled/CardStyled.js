@@ -24,7 +24,7 @@ export const ErrorHandlingStyled = ({ field, form: { touched, errors }, ...props
             {...props}
             error={!!errorText}
             helperText={
-                errorText ? errorText.split('\n').map((err, index) => (
+                errorText ? errorText.map((err, index) => (
                     <span key={index} style={{ display: "block" }}>{err}</span>
                 )) : null
             }

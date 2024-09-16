@@ -2,7 +2,6 @@ import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { Formik, Form, Field } from 'formik';
 import { Button, Container, Typography } from '@mui/material';
-
 import { registerSchema } from './validations';
 import { AuthContext } from '../../contexts/AuthContext';
 import { CardStyled, ErrorHandlingStyled } from '../CardStyled/CardStyled';
@@ -11,23 +10,37 @@ const initialValues = {
     email: '',
     password: '',
     confirmPassword: ''
-}
+};
 
 export const Register = () => {
     const { onRegisterSubmit } = useContext(AuthContext);
+
     return (
         <Container component="main" maxWidth="sm" margin="auto">
             <CardStyled headerContent="Adopt ME">
                 <Formik
                     initialValues={initialValues}
                     validationSchema={registerSchema}
+                    validate={(values) => {
+                        let errors = {};
+                        try {
+                            registerSchema.validateSync(values, { abortEarly: false });
+                        } catch (err) {
+                            if (err.inner) {
+                                err.inner.forEach(error => {
+                                    errors[error.path] = errors[error.path] || [];
+                                    errors[error.path].push(error.message);
+                                });
+                            }
+                        }
+                        return errors;
+                    }}
                     onSubmit={(values) => {
                         onRegisterSubmit(values);
                     }}
                 >
                     {() => (
                         <Form>
-
                             <Field
                                 name='email'
                                 type='email'
