@@ -5,9 +5,7 @@ import { auth } from '../firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import { authServiceFactory } from '../services/authService';
 import { useLocalStorage } from '../hooks/useLocalStorage';
-
 import { SessionExpired } from '../components/SessionExpired/SessionExpired';
-
 
 export const AuthContext = createContext();
 
@@ -17,11 +15,11 @@ export const AuthProvider = ({
     const navigate = useNavigate();
     const authService = authServiceFactory();
     const [currentUser, setCurrentUser] = useLocalStorage('currentUser', null);
-    const [open, setOpen] = useState(false);
+    const [openDialogSessionExpired, setOpenDialogSessionExpired] = useState(false);
 
     useEffect(() => {
         const handleSessionValidation = () => {
-            if (validateUserSession()) {
+            if (isUserSessionExpired()) {
                 handleSessionExpiration();
             }
         };
@@ -40,22 +38,22 @@ export const AuthProvider = ({
         }
     }, [currentUser]);
 
-    const validateUserSession = () => {
+    const isUserSessionExpired = () => {
         if (currentUser) {
             const expirationTime = currentUser.stsTokenManager.expirationTime;
             const currentTime = Date.now();
             return expirationTime <= currentTime
         }
+        return false;
     };
 
-    const handleSessionExpiration = async () => {
-        setOpen(true);
-        await authService.logout();
-        setCurrentUser(null);
-        navigate('/login');
-    };
-    const close = () => {
-        setOpen(false);
+    const handleSessionExpiration = () => {
+        setOpenDialogSessionExpired(true);
+        authService.logout()
+            .then(() => {
+                setCurrentUser(null);
+                navigate('/login');
+            })
     };
 
     const onLoginSubmit = async (data) => {
@@ -102,7 +100,7 @@ export const AuthProvider = ({
         <>
             <AuthContext.Provider value={contextValues}>
                 {children}
-                <SessionExpired open={open} onClose={close} />
+                <SessionExpired open={openDialogSessionExpired} onClose={() => setOpenDialogSessionExpired(false)} />
             </AuthContext.Provider>
         </>
     );
