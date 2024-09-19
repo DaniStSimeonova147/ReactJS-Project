@@ -24,9 +24,13 @@ export const ErrorHandlingStyled = ({ field, form: { touched, errors }, ...props
             {...props}
             error={!!errorText}
             helperText={
-                errorText ? errorText.map((err, index) => (
-                    <span key={index} style={{ display: "block" }}>{err}</span>
-                )) : null
+                Array.isArray(errorText) ? (
+                    errorText.map((err, index) => (
+                        <span key={index} style={{ display: "block" }}>{err}</span>
+                    ))
+                ) : (
+                    errorText // For single error string
+                )
             }
             fullWidth
             size="small"
